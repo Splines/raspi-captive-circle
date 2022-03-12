@@ -1,4 +1,4 @@
-class Timer {
+export class Timer {
 
     private ms_to_timeout: number;
     private timeout: NodeJS.Timeout | null = null;

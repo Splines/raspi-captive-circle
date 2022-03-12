@@ -1,4 +1,4 @@
-class Player {
+export class Player {
 
     /**
      * Name of this Player.

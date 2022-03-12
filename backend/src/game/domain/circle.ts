@@ -1,4 +1,8 @@
-class Circle {
+import { PassOnAction } from "./action";
+import { Direction } from "./direction";
+import { Player } from "./player";
+
+export class Circle {
 
     /**
      * Players are stored clockwise
@@ -13,8 +17,8 @@ class Circle {
         return this.players;
     }
 
-    getNeighbor(activePlayer: Player, direction: Direction, steps = 1): Player {
-        if (steps < 1)
+    getNeighbor(activePlayer: Player, action: PassOnAction): Player {
+        if (action.steps < 1)
             throw Error('You must take at least one step');
 
         // Find current player
@@ -25,13 +29,13 @@ class Circle {
             throw Error(`The specified plyer "${activePlayer} is already eliminated from the game`);
 
         // Get neighbor according to direction
-        let nextPlayerIndex: number;
         let nextPlayer: Player | null = null;
-        const indexOffset = (direction == Direction.CLOCKWISE) ? +1 : -1;
+        const indexOffset = (action.direction == Direction.CLOCKWISE) ? +1 : -1;
 
         let stepsTaken = 0;
-        while (stepsTaken < steps) {
-            nextPlayerIndex = this.wrapIndex(index + indexOffset);
+        let nextPlayerIndex = index;
+        while (stepsTaken < action.steps) {
+            nextPlayerIndex = this.wrapIndex(nextPlayerIndex + indexOffset);
             nextPlayer = this.players[nextPlayerIndex];
             if (!nextPlayer.isEliminated())
                 stepsTaken++;
@@ -45,7 +49,17 @@ class Circle {
     }
 
     private wrapIndex(index: number) {
-        return index % this.players.length;
+        if (Math.abs(index) > this.players.length) {
+            throw Error('Index out of bounds');
+        }
+
+        if (index > 0)
+            return index % this.players.length;
+        if (index < 0) {
+            // e.g. [0, 1, 2], accessing element -1 gives element at index 3+(-1)=2
+            return this.players.length + index;
+        }
+        return index;
     }
 
 }

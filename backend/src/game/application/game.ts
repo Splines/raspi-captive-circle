@@ -1,4 +1,10 @@
-class Game {
+import { PassOnAction } from "../domain/action";
+import { Circle } from "../domain/circle";
+import { Player } from "../domain/player";
+import { EliminatedPlayersObserver } from "./eliminatedPlayersObserver";
+import { Timer } from "./timer";
+
+export class Game {
 
     private circle: Circle;
     private activePlayer: Player;
@@ -26,8 +32,7 @@ class Game {
     }
 
     passOn(action: PassOnAction): Player {
-        this.activePlayer = this.circle
-            .getNeighbor(this.activePlayer, action.direction, action.steps);
+        this.activePlayer = this.circle.getNeighbor(this.activePlayer, action);
         this.timer.resetAndStart();
         return this.activePlayer;
     }
