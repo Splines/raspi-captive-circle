@@ -24,9 +24,8 @@ export class Circle {
         // Find current player
         const index = this.players.indexOf(activePlayer);
         if (index == -1)
-            throw Error(`The specified player "${activePlayer}" could not be found`);
-        if (activePlayer.isEliminated())
-            throw Error(`The specified plyer "${activePlayer} is already eliminated from the game`);
+            throw Error(`The specified player "${JSON.stringify(activePlayer)}" `
+                + `could not be found`);
 
         // Get neighbor according to direction
         let nextPlayer: Player | null = null;
@@ -40,11 +39,13 @@ export class Circle {
             if (!nextPlayer.isEliminated())
                 stepsTaken++;
             else if (nextPlayer === activePlayer)
-                throw Error('Could not find a new active player anymore -> Game logic is flawed');
+                throw Error('Could not find a new active player anymore '
+                    + '-> Game logic is flawed');
         }
 
         if (!nextPlayer)
-            throw Error('Fatal Error (should never happen): Next player is not defined');
+            throw Error('Fatal Error (should never happen): '
+                + 'Next player is not defined');
         return nextPlayer;
     }
 
@@ -56,7 +57,8 @@ export class Circle {
         if (index > 0)
             return index % this.players.length;
         if (index < 0) {
-            // e.g. [0, 1, 2], accessing element -1 gives element at index 3+(-1)=2
+            // e.g. [0, 1, 2], accessing element -1
+            // gives element at index 3+(-1)=2
             return this.players.length + index;
         }
         return index;

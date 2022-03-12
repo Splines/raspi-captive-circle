@@ -9,10 +9,15 @@ export class Game {
     private circle: Circle;
     private activePlayer: Player;
     private timer: Timer;
+    private playersEliminatedCount: number = 0;
 
-    private readonly TIME_THRESHOLD_IN_MS = 1000;
+    private readonly time_threshold_ms: number;
 
-    constructor(players: Player[], playersObserver: EliminatedPlayersObserver) {
+    constructor(
+        players: Player[],
+        playersObserver: EliminatedPlayersObserver,
+        time_threshold_ms = 1500
+    ) {
         if (players.length < 3) {
             throw Error('There must be at least three players in a circle');
         }
@@ -22,9 +27,12 @@ export class Game {
         this.activePlayer = players[0];
 
         // Initialize Timer for elimination of players
+        this.time_threshold_ms = time_threshold_ms;
         this.timer = new Timer(() => {
-            playersObserver.updateElimination(this.activePlayer)
-        }, this.TIME_THRESHOLD_IN_MS);
+            this.playersEliminatedCount++;
+            this.activePlayer.eliminate();
+            playersObserver.updateElimination(this.activePlayer);
+        }, this.time_threshold_ms);
     }
 
     getActivePlayer(): Player {
@@ -32,6 +40,10 @@ export class Game {
     }
 
     passOn(action: PassOnAction): Player {
+        if (this.playersEliminatedCount == this.circle.getPlayers().length) {
+            throw Error('All players eliminated, game should have ended');
+        }
+
         this.activePlayer = this.circle.getNeighbor(this.activePlayer, action);
         this.timer.resetAndStart();
         return this.activePlayer;

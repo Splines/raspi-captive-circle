@@ -18,6 +18,10 @@ export class Player {
         return this.name;
     }
 
+    eliminate(): void {
+        this.eliminated = true;
+    }
+
     isEliminated(): boolean {
         return this.eliminated;
     }
