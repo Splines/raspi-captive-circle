@@ -28,15 +28,14 @@ sudo cp ./hotspot/dnsmasq.conf /etc/dnsmasq.conf
 sudo systemctl restart dnsmasq
 
 # --- Routing and masquerade
+# Activate IPv4 package forwarding
+sudo sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
 # Add redirect for all inbound http traffic for 192.168.4.1
 # (which we defined earlier in dnsmasq.conf)
 # to our Node.js server on port 3000 (192.168.4.1:3000)
-sudo iptables \
-    --table nat \
-    --insert PREROUTING \
-    --destination 192.168.4.1 \
-    --protocol tcp --destination-port 80 \
-    --jump DNAT --to-destination 192.168.4.1:3000
+sudo iptables -t nat -I PREROUTING -p tcp -m multiport --dports 80,443 -j DNAT --to-destination 192.168.4.1:3000
+sudo iptables -t nat -I POSTROUTING -p tcp -m multiport --dport 80,443 -j MASQUERADE
+
 # Save to be loaded at boot by the netfilter-persistent service
 sudo netfilter-persistent save
 
