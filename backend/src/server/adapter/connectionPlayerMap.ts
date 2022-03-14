@@ -44,4 +44,8 @@ export class ConnectionPlayerManager {
         return this.playerConnectionMap.get(player);
     }
 
+    getPlayerBy(connection: Connection) {
+        return this.connectionPlayerMap.get(connection);
+    }
+
 }

@@ -37,7 +37,7 @@ websocketServer.on('connection', (socket: WebSocket, req: Request) => {
     connection.assignWebSocket(socket);
 
     socket.on('message', (msg: string) => {
-        handleWebSocketEvent(msg);
+        handleWebSocketEvent(connection, msg);
     });
 
     // socket.on('close', function () {

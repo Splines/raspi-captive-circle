@@ -34,4 +34,8 @@ export class GameAdapter {
         return this.connectionPlayerManager.getConnectionFor(player);
     }
 
+    getPlayerBy(connection: Connection) {
+        return this.connectionPlayerManager.getPlayerBy(connection);
+    }
+
 }
