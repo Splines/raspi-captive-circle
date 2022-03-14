@@ -1,18 +1,4 @@
-let ws = null;
-
-// Login button
-const login = document.getElementById('login-btn');
-login.onclick = async () => {
-    try {
-        const res = await axios.post('/api/login', { withCredentials: true });
-        console.log(res.data);
-
-        // Setup WebSocket Connection
-        ws = new WebSocket(`ws://${location.host}`);
-    } catch (error) {
-        console.error(error);
-    }
-}
+let ws = login();
 
 // Ready button
 const readyButton = document.getElementById('ready-btn');
