@@ -1,6 +1,9 @@
 const DIRECTION_LEFT = 2;
 const DIRECTION_HORIZONTAL = 6;
 
+const swellPleng = new Audio('/assets/audio/Swell-Pleng-Short-Attack.mp3');
+const swellPlengDark = new Audio('/assets/audio/Swell-Pleng-Dark.mp3');
+
 function handleGestures(ws) {
     const gestureArea = document.getElementById('gesture-area');
     const mc = new Hammer.Manager(gestureArea);
@@ -8,6 +11,8 @@ function handleGestures(ws) {
     mc.add(new Hammer.Swipe({ event: 'twoFingersHorizontalSwipe', pointers: 2, direction: DIRECTION_HORIZONTAL }));
 
     mc.on("oneFingerHorizontalSwipe", event => {
+        swellPleng.load();
+        swellPleng.play();
         const action = (event.direction === DIRECTION_LEFT)
             ? "PASS_ON_CLOCKWISE" : "PASS_ON_COUNTER_CLOCKWISE";
         console.log(`🎈 1 Finger: ${action}`);
@@ -15,6 +20,8 @@ function handleGestures(ws) {
     });
 
     mc.on("twoFingersHorizontalSwipe", event => {
+        swellPlengDark.load();
+        swellPlengDark.play();
         const action = (event.direction === DIRECTION_LEFT)
             ? "PASS_ON_CLOCKWISE_SKIP" : "PASS_ON_COUNTER_CLOCKWISE_SKIP";
         console.log(`🎈 2 Fingers: ${action}`);
