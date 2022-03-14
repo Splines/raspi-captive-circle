@@ -3,10 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
     <title>Captive Circle</title>
 
     <script src="../node_modules/axios/dist/axios.min.js"></script>
+    <script src="../node_modules/hammerjs/hammer.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/src/style.css">
 </head>
 
@@ -15,25 +16,12 @@
         Get ready
     </button>
 
-    <!-- Actions -->
-
-    <button id="clockwise-btn" type="button">
-        Pass on CLOCKWISE
-    </button>
-
-    <button id="clockwise-skip-btn" type="button">
-        Pass on CLOCKWISE SKIP
-    </button>
-
-    <button id="counter-clockwise-btn" type="button">
-        Pass on COUNTER CLOCKWISE
-    </button>
-
-    <button id="counter-clockwise-skip-btn" type="button">
-        Pass on COUNTER CLOCKWISE SKIP
-    </button>
+    <div id="gesture-area">
+        Test gesture area
+    </div>
 
     <script src="/src/color.js"></script>
+    <script src="/src/gesture.js"></script>
     <script src="/src/login.js"></script>
     <script src="/src/app.js"></script>
 </body>

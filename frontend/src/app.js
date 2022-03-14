@@ -1,27 +1,13 @@
 (async function () {
     const ws = await login();
 
-    document.getElementById('clockwise-btn').onclick = async () => {
-        ws.send('PASS_ON_CLOCKWISE');
-    };
-
-    document.getElementById('clockwise-skip-btn').onclick = async () => {
-        ws.send('PASS_ON_CLOCKWISE_SKIP');
-    };
-
-    document.getElementById('counter-clockwise-btn').onclick = async () => {
-        ws.send('PASS_ON_COUNTER_CLOCKWISE');
-    };
-
-    document.getElementById('counter-clockwise-skip-btn').onclick = async () => {
-        ws.send('PASS_ON_COUNTER_CLOCKWISE_SKIP');
-    }
-
     ws.onmessage = event => {
         const msg = event.data;
         if (msg == 'ELIMINATION_TIMEOUT')
             return handleTimeoutElimination();
     }
+
+    handleGestures(ws);
 })();
 
 // Ready button

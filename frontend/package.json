@@ -5,6 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.26.1"
+    "axios": "^0.26.1",
+    "hammerjs": "^2.0.8"
   }
 }
