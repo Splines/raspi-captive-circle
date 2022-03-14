@@ -1,5 +1,4 @@
 function handleGestures(ws) {
-    // Gestures
     const gestureArea = document.getElementById('gesture-area');
     const mc = new Hammer.Manager(gestureArea, {
         recognizers: [
@@ -8,43 +7,34 @@ function handleGestures(ws) {
         ]
     });
 
-    const THRESHOLD_SWIPE_TAP_GAP_IN_MS = 190;
-    let lastSwipeTime;
-    let lastSwipeDirection = "";
-    let swipeOccurred = false;
-
-    mc.on("swipeleft swiperight", event => {
-        // Update state
-        lastSwipeTime = Date.now();
-        lastSwipeDirection = event.type;
-        swipeOccurred = true;
-
-        // Wait for threshold time
-        setTimeout(() => {
-            // Check if swipe already consumed together with tap
-            if (!swipeOccurred)
-                return;
-
-            const action = event.type === "swipeleft"
-                ? "PASS_ON_CLOCKWISE" : "PASS_ON_COUNTER_CLOCKWISE";
-            console.log(`🎈 Only Swipe: ${action}`);
-            ws.send(action);
-        }, THRESHOLD_SWIPE_TAP_GAP_IN_MS);
-    });
+    const THRESHOLD_TAP_SWIPE_GAP_IN_MS = 300;
+    let lastTapTime = Date.now();
+    let tapOccurred = false;
 
     mc.on("tap", event => {
-        if (!swipeOccurred)
-            return;
-
-        const deltaTime = Date.now() - lastSwipeTime;
-        if (deltaTime > THRESHOLD_SWIPE_TAP_GAP_IN_MS) {
-            return;
-        }
-
-        swipeOccurred = false;
-        const action = lastSwipeDirection === "swipeleft"
-            ? "PASS_ON_CLOCKWISE_SKIP" : "PASS_ON_COUNTER_CLOCKWISE_SKIP";
-        console.log(`🎈 Swipe-Tap: ${action}`);
-        ws.send(action);
+        console.log('tap');
+        lastTapTime = Date.now();
+        tapOccurred = true;
+        setTimeout(() => tapOccurred = false, THRESHOLD_TAP_SWIPE_GAP_IN_MS);
     });
+
+    mc.on("swipeleft swiperight", event => {
+        if (tapOccurred) {
+            const deltaTime = Date.now() - lastTapTime;
+            if (deltaTime > THRESHOLD_TAP_SWIPE_GAP_IN_MS) {
+                return;
+            }
+
+            const action = (event.type === "swipeleft")
+                ? "PASS_ON_CLOCKWISE_SKIP" : "PASS_ON_COUNTER_CLOCKWISE_SKIP";
+            console.log(`🎈⚡ Tap-Swipe: ${action}`);
+            ws.send(action);
+        } else {
+            const action = (event.type === "swipeleft")
+                ? "PASS_ON_CLOCKWISE" : "PASS_ON_COUNTER_CLOCKWISE";
+            console.log(`⚡ Swipe: ${action}`);
+            ws.send(action);
+        }
+    });
+
 }
