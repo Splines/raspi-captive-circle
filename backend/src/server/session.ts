@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import session from "express-session";
 
 declare module "express-session" {
@@ -16,11 +16,23 @@ export const sessionParser = session({
     cookie: { secure: false, httpOnly: false } // session ID cookie
 });
 
-export async function checkAuthorization(req: Request): Promise<boolean> {
+function isAuthenticatedCheck(req: Request) {
+    return req.session.userId != null;
+}
+
+export async function isAuthenticated(req: Request): Promise<boolean> {
     return new Promise((resolve) => {
         sessionParser(req, {} as Response, () => {
-            const isAuthorized = req.session.userId != null;
-            resolve(isAuthorized);
+            resolve(isAuthenticatedCheck(req));
         });
     });
+}
+
+export async function isAuthenticatedMiddleware(req: Request, res: Response, next: NextFunction) {
+    sessionParser(req, {} as Response, () => {
+        if (!isAuthenticatedCheck(req)) {
+            return res.status(401).send('Not authenticated');
+        }
+        next();
+    })
 }

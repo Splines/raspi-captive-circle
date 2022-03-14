@@ -1,6 +1,6 @@
 import { Request } from 'express';
-import WebSocket from 'ws';
-
+import { WebSocket } from 'ws';
+import { connectionManager } from './server';
 
 // Resources
 
@@ -22,15 +22,26 @@ import WebSocket from 'ws';
 export const websocketServer = new WebSocket.Server({ noServer: true }); // no additional HTTP server
 
 websocketServer.on('connection', (socket: WebSocket, req: Request) => {
+    const userId = req.session.userId;
+    if (!userId) {
+        console.error('Fatal error, session has no "userId"');
+        return;
+    }
 
-    console.log(req.session);
+    const connection = connectionManager.findConnectionById(userId);
+    if (!connection) {
+        console.error('Fatal error, cant find connection for user');
+        return;
+    }
+    connection.assignWebSocket(socket);
 
-    socket.on('message', (message: string) => {
-        const parsedMessage = JSON.parse(message);
-        console.log('This is a parsed message');
-        console.log(parsedMessage);
-    });
-
-    socket.send('Welcome to this websocket ✨');
-
+    socket.on('message', onMessage);
+    // socket.on('close', function () {
+    //     console.log('WebSocket closed, will remove connection');
+    //     connectionManager.removeConnection(userId);
+    // });
 });
+
+function onMessage(message: string) {
+    console.log(`Received message: ${message}`);
+}

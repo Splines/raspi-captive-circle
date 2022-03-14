@@ -17,6 +17,7 @@
     "@types/node": "^16.11.6",
     "@types/ws": "^8.5.3",
     "chai": "^4.3.6",
+    "kill-port": "^1.6.1",
     "mocha": "^9.2.2",
     "nodemon": "^2.0.14",
     "rimraf": "^3.0.2",
@@ -25,6 +26,7 @@
   },
   "scripts": {
     "dev": "nodemon",
+    "dev-once": "kill-port 3000 && node -r ts-node/register src/server/server.ts",
     "build": "rimraf ./build && tsc",
     "start": "node build/index.js",
     "build-start": "npm run build && npm run start",

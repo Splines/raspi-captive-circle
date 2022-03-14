@@ -1,10 +1,12 @@
-import { randomUUID } from 'crypto';
 import express, { NextFunction, Request, Response } from 'express';
 import http from 'http';
 import path from 'path';
-import { checkAuthorization, sessionParser } from './session';
-import { myTest } from './test';
-import { websocketServer } from './websocket/websocket';
+import { Duplex } from 'stream';
+import { ConnectionManager } from './connection';
+import { login } from './login';
+import { getReady } from './ready';
+import { isAuthenticated, isAuthenticatedMiddleware, sessionParser } from './session';
+import { websocketServer } from './websocket';
 
 const HOST_NAME = 'captive.circle';
 const FRONTEND_FOLDER = path.join(__dirname, '../../..', 'frontend');
@@ -15,16 +17,19 @@ const server = http.createServer(app);
 app.use(express.static(FRONTEND_FOLDER));
 app.use(sessionParser);
 
+export const connectionManager = new ConnectionManager();
+
 // "Glue code" for websockets and sessions
-server.on('upgrade', async (req: Request, socket, head) => {
-    const isAuthorized = await checkAuthorization(req);
-    if (!isAuthorized) {
+server.on('upgrade', async (req: Request, socket: Duplex, head: Buffer) => {
+    const authenticated = await isAuthenticated(req);
+    if (!authenticated) {
+        console.error('Destroy socket on upgrade as not authenticated');
         socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
         socket.destroy();
         return;
     }
 
-    console.log('Session is parsed! Verified.');
+    // WebSocket Connection
     websocketServer.handleUpgrade(req, socket, head, (websocket) => {
         websocketServer.emit('connection', websocket, req);
     });
@@ -45,14 +50,8 @@ app.get('/', (req, res, next) => {
     res.sendFile(path.join(FRONTEND_FOLDER, 'index.html'));
 })
 
-app.post('/login', (req, res, next) => {
-    const userId = randomUUID();
-    console.log(`Updating session for user ${userId}`);
-    req.session.userId = userId;
-    res.send('OK');
-});
-
-app.get('/api/test', myTest);
+app.post('/api/login', login);
+app.post('/api/ready', isAuthenticatedMiddleware, getReady);
 
 
 ///////////////////////////// Server listening /////////////////////////////////
