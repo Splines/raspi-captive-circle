@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { gameAdapter } from "./adapter/gameAdapter";
-import { connectionManager } from "./server";
+import { gameAdapter } from "../adapter/gameAdapter";
+import { connectionManager } from "../server";
 
 export async function getReady(req: Request, res: Response) {
     const id = req.session.userId!;

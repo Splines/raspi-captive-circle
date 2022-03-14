@@ -1,6 +1,7 @@
 import { WebSocket } from "ws";
 
 export class ConnectionManager {
+
     private connections: Set<Connection> = new Set();
 
     addConnection(connection: Connection) {

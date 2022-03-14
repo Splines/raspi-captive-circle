@@ -1,7 +1,7 @@
 import { EliminatedPlayersObserver } from "../../game/application/eliminatedPlayersObserver";
 import { Game } from "../../game/application/game";
 import { Player } from "../../game/domain/player";
-import { Connection } from "../connection";
+import { Connection } from "../connection/connection";
 import { ConnectionPlayerManager } from "./connectionPlayerMap";
 
 export class GameState {

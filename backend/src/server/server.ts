@@ -2,11 +2,11 @@ import express, { NextFunction, Request, Response } from 'express';
 import http from 'http';
 import path from 'path';
 import { Duplex } from 'stream';
-import { ConnectionManager } from './connection';
-import { login } from './login';
-import { getReady } from './ready';
-import { isAuthenticated, isAuthenticatedMiddleware, sessionParser } from './session';
-import { websocketServer } from './websocket';
+import { ConnectionManager } from './connection/connection';
+import { isAuthenticated, isAuthenticatedMiddleware, sessionParser } from './connection/session';
+import { websocketServer } from './connection/websocket';
+import { login } from './endpoints/login';
+import { getReady } from './endpoints/ready';
 
 const HOST_NAME = 'captive.circle';
 const FRONTEND_FOLDER = path.join(__dirname, '../../..', 'frontend');

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { Connection } from './connection';
-import { connectionManager } from './server';
-import { sessionParser } from './session';
+import { Connection } from '../connection/connection';
+import { sessionParser } from '../connection/session';
+import { connectionManager } from '../server';
 
 export async function login(req: Request, res: Response) {
 

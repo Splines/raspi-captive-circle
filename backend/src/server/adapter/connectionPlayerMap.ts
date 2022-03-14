@@ -1,5 +1,5 @@
 import { Player } from "../../game/domain/player";
-import { Connection } from "../connection";
+import { Connection } from "../connection/connection";
 import { removeFromList } from "../util";
 
 export class ConnectionPlayerManager {
