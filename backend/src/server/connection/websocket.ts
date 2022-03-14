@@ -1,6 +1,7 @@
 import { Request } from 'express';
 import { WebSocket } from 'ws';
 import { connectionManager } from '../server';
+import { handleWebSocketEvent } from './websocketEvent';
 
 // Resources
 
@@ -35,13 +36,12 @@ websocketServer.on('connection', (socket: WebSocket, req: Request) => {
     }
     connection.assignWebSocket(socket);
 
-    socket.on('message', onMessage);
+    socket.on('message', (msg: string) => {
+        handleWebSocketEvent(msg);
+    });
+
     // socket.on('close', function () {
     //     console.log('WebSocket closed, will remove connection');
     //     connectionManager.removeConnection(userId);
     // });
 });
-
-function onMessage(message: string) {
-    console.log(`Received message: ${message}`);
-}

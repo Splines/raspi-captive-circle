@@ -7,6 +7,7 @@ import { isAuthenticated, isAuthenticatedMiddleware, sessionParser } from './con
 import { websocketServer } from './connection/websocket';
 import { login } from './endpoints/login';
 import { getReady } from './endpoints/ready';
+import { startGame } from './endpoints/start';
 
 const HOST_NAME = 'captive.circle';
 const FRONTEND_FOLDER = path.join(__dirname, '../../..', 'frontend');
@@ -47,11 +48,17 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 /////////////////////////////// Endpoints //////////////////////////////////////
 
 app.get('/', (req, res, next) => {
-    res.sendFile(path.join(FRONTEND_FOLDER, 'index.html'));
-})
+    res.sendFile(path.join(FRONTEND_FOLDER, 'src/index.html'));
+});
+
+app.get('/admin', (req, res, next) => {
+    res.sendFile(path.join(FRONTEND_FOLDER, 'src/admin/admin.html'))
+});
 
 app.post('/api/login', login);
 app.post('/api/ready', isAuthenticatedMiddleware, getReady);
+
+app.post('/api/admin/start', startGame);
 
 
 ///////////////////////////// Server listening /////////////////////////////////
