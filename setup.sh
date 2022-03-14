@@ -25,6 +25,8 @@ sudo systemctl restart dhcpcd
 # --- Configure DHCP server (dnsmasq)
 sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
 sudo cp ./hotspot/dnsmasq.conf /etc/dnsmasq.conf
+sudo systemctl unmask dnsmasq.service
+sudo systemctl enable dnsmasq.service
 sudo systemctl restart dnsmasq
 
 # --- Routing and masquerade
