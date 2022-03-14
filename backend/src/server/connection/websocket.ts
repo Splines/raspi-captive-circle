@@ -1,6 +1,6 @@
 import { Request } from 'express';
 import { WebSocket } from 'ws';
-import { connectionManager } from '../server';
+import { connectionManager } from '../instanceManager';
 import { handleWebSocketEvent } from './websocketEvent';
 
 // Resources

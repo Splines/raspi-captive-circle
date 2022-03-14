@@ -1,6 +1,6 @@
 import { PassOnAction } from "../../game/domain/action";
-import { gameAdapter } from "../adapter/gameAdapter";
 import { onWebSocketEvent } from "../connection/websocketEvent";
+import { gameAdapter } from "../instanceManager";
 
 onWebSocketEvent("PASS_ON_CLOCKWISE", () => {
     console.log('🔥 Clockwise');

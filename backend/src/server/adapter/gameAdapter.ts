@@ -9,10 +9,15 @@ export class GameAdapter {
 
     private game: Game | null = null;
     private connectionPlayerManager = new ConnectionPlayerManager();
+    private eliminationObserver: EliminatedPlayersObserver;
+
+    constructor(eliminationObserver: EliminatedPlayersObserver) {
+        this.eliminationObserver = eliminationObserver;
+    }
 
     initGame() {
         const players = this.connectionPlayerManager.getAllPlayers();
-        this.game = new Game(players, new MyEliminatedPlayersObserver());
+        this.game = new Game(players, this.eliminationObserver);
     }
 
     registerPlayerFromConnection(connection: Connection) {
@@ -25,13 +30,8 @@ export class GameAdapter {
         this.game.passOn(action);
     }
 
-}
-
-export const gameAdapter = new GameAdapter();
-
-
-class MyEliminatedPlayersObserver extends EliminatedPlayersObserver {
-    public updateElimination(player: Player): void {
-        console.log('eliminated a player');
+    getPlayerConnection(player: Player) {
+        return this.connectionPlayerManager.getConnectionFor(player);
     }
+
 }

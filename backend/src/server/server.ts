@@ -2,7 +2,6 @@ import express, { NextFunction, Request, Response } from 'express';
 import http from 'http';
 import path from 'path';
 import { Duplex } from 'stream';
-import { ConnectionManager } from './connection/connection';
 import { isAuthenticated, isAuthenticatedMiddleware, sessionParser } from './connection/session';
 import { websocketServer } from './connection/websocket';
 import { login } from './endpoints/login';
@@ -18,7 +17,7 @@ const server = http.createServer(app);
 app.use(express.static(FRONTEND_FOLDER));
 app.use(sessionParser);
 
-export const connectionManager = new ConnectionManager();
+require('./instanceManager');
 
 // "Glue code" for websockets and sessions
 server.on('upgrade', async (req: Request, socket: Duplex, head: Buffer) => {

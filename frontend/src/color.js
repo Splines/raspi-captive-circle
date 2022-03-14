@@ -1,0 +1,1 @@
+const ELIMINATION_COLOR = '#F24752';

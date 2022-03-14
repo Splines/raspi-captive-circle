@@ -5,6 +5,7 @@ import { removeFromList } from "../util";
 export class ConnectionPlayerManager {
 
     private connectionPlayerMap: Map<Connection, Player> = new Map();
+    private playerConnectionMap: Map<Player, Connection> = new Map();
     private players: Player[] = [];
 
     /**
@@ -25,6 +26,7 @@ export class ConnectionPlayerManager {
         else {
             player = new Player("no-name-player");
             this.connectionPlayerMap.set(connection, player);
+            this.playerConnectionMap.set(player, connection);
         }
 
         // Insert existing player at the end
@@ -36,6 +38,10 @@ export class ConnectionPlayerManager {
      */
     getAllPlayers(): Player[] {
         return Array.from(this.connectionPlayerMap.values());
+    }
+
+    getConnectionFor(player: Player) {
+        return this.playerConnectionMap.get(player);
     }
 
 }

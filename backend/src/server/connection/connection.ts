@@ -44,4 +44,9 @@ export class Connection {
         return this._socket;
     }
 
+    sendIfPossible(msg: string) {
+        if (this.socket)
+            this.socket.send(msg);
+    }
+
 }
