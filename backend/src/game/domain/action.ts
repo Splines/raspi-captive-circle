@@ -14,9 +14,9 @@ export class PassOnAction {
         public readonly steps: number
     ) { }
 
-    static readonly RELAY = new PassOnAction(Direction.CLOCKWISE, 1);
-    static readonly RELAY_SKIP = new PassOnAction(Direction.CLOCKWISE, 2);
-    static readonly RETURN = new PassOnAction(Direction.COUNTER_CLOCKWISE, 1);
-    static readonly RETURN_SKIP = new PassOnAction(Direction.COUNTER_CLOCKWISE, 2);
+    static readonly CLOCKWISE = new PassOnAction(Direction.CLOCKWISE, 1);
+    static readonly CLOCKWISE_SKIP = new PassOnAction(Direction.CLOCKWISE, 2);
+    static readonly COUNTER_CLOCKWISE = new PassOnAction(Direction.COUNTER_CLOCKWISE, 1);
+    static readonly COUNTER_CLOCKWISE_SKIP = new PassOnAction(Direction.COUNTER_CLOCKWISE, 2);
 
 }

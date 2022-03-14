@@ -16,29 +16,29 @@ describe('Captive Circle Game', function () {
         const game: Game = new Game(players, new MyEliminatedPlayersObserver());
 
         expect(game.getActivePlayer()).to.equal(players[0]);
-        game.passOn(PassOnAction.RELAY);
+        game.passOn(PassOnAction.CLOCKWISE);
         expect(game.getActivePlayer()).to.equal(players[1]);
-        game.passOn(PassOnAction.RELAY);
+        game.passOn(PassOnAction.CLOCKWISE);
         expect(game.getActivePlayer()).to.equal(players[2]);
-        game.passOn(PassOnAction.RELAY);
+        game.passOn(PassOnAction.CLOCKWISE);
         expect(game.getActivePlayer()).to.equal(players[0]);
-        game.passOn(PassOnAction.RELAY_SKIP);
+        game.passOn(PassOnAction.CLOCKWISE_SKIP);
         expect(game.getActivePlayer()).to.equal(players[2]);
-        game.passOn(PassOnAction.RELAY_SKIP);
+        game.passOn(PassOnAction.CLOCKWISE_SKIP);
         expect(game.getActivePlayer()).to.equal(players[1]);
-        game.passOn(PassOnAction.RETURN_SKIP);
+        game.passOn(PassOnAction.COUNTER_CLOCKWISE_SKIP);
         expect(game.getActivePlayer()).to.equal(players[2]);
-        game.passOn(PassOnAction.RETURN);
+        game.passOn(PassOnAction.COUNTER_CLOCKWISE);
         expect(game.getActivePlayer()).to.equal(players[1]);
-        game.passOn(PassOnAction.RETURN);
+        game.passOn(PassOnAction.COUNTER_CLOCKWISE);
         expect(game.getActivePlayer()).to.equal(players[0]);
-        game.passOn(PassOnAction.RETURN);
+        game.passOn(PassOnAction.COUNTER_CLOCKWISE);
         expect(game.getActivePlayer()).to.equal(players[2]);
-        game.passOn(PassOnAction.RETURN_SKIP);
+        game.passOn(PassOnAction.COUNTER_CLOCKWISE_SKIP);
         expect(game.getActivePlayer()).to.equal(players[0]);
-        game.passOn(PassOnAction.RELAY_SKIP);
+        game.passOn(PassOnAction.CLOCKWISE_SKIP);
         expect(game.getActivePlayer()).to.equal(players[2]);
-        game.passOn(PassOnAction.RELAY);
+        game.passOn(PassOnAction.CLOCKWISE);
         expect(game.getActivePlayer()).to.equal(players[0]);
     });
 
@@ -53,42 +53,42 @@ describe('Captive Circle Game', function () {
         const game: Game = new Game(players, new MyEliminatedPlayersObserver(), 200);
 
         expect(game.getActivePlayer()).to.equal(players[0]);
-        game.passOn(PassOnAction.RELAY);
+        game.passOn(PassOnAction.CLOCKWISE);
         expect(game.getActivePlayer()).to.equal(players[1]);
 
         expect(eliminated).to.not.contain(players[1]);
         await sleep(300); // Eliminate P1
         expect(eliminated).to.contain(players[1]);
-        game.passOn(PassOnAction.RELAY); // P1 chooses next action
+        game.passOn(PassOnAction.CLOCKWISE); // P1 chooses next action
 
         expect(game.getActivePlayer()).to.equal(players[2]);
-        game.passOn(PassOnAction.RETURN); // P1 is skipped
+        game.passOn(PassOnAction.COUNTER_CLOCKWISE); // P1 is skipped
 
         expect(game.getActivePlayer()).to.equal(players[0]);
-        game.passOn(PassOnAction.RELAY_SKIP);
+        game.passOn(PassOnAction.CLOCKWISE_SKIP);
 
         expect(game.getActivePlayer()).to.equal(players[0]);
-        game.passOn(PassOnAction.RELAY);
+        game.passOn(PassOnAction.CLOCKWISE);
 
         expect(game.getActivePlayer()).to.equal(players[2]);
-        game.passOn(PassOnAction.RELAY);
+        game.passOn(PassOnAction.CLOCKWISE);
 
         expect(eliminated).to.deep.equal([players[1]]);
         await sleep(300); // Eliminate P0
         expect(eliminated).to.deep.equal([players[1], players[0]]);
-        game.passOn(PassOnAction.RELAY); // P0 chooses next action
+        game.passOn(PassOnAction.CLOCKWISE); // P0 chooses next action
 
         // Just P2 is left
-        game.passOn(PassOnAction.RETURN_SKIP);
+        game.passOn(PassOnAction.COUNTER_CLOCKWISE_SKIP);
         expect(game.getActivePlayer()).to.equal(players[2]);
 
         // P2 eliminates him/herself
-        game.passOn(PassOnAction.RELAY);
+        game.passOn(PassOnAction.CLOCKWISE);
         await sleep(300);
         expect(eliminated).to.deep.equal([players[1], players[0], players[2]]);
 
         // Error if P2 wants to do something since all players are eliminated
-        expect(() => game.passOn(PassOnAction.RELAY)).to.throw();
+        expect(() => game.passOn(PassOnAction.CLOCKWISE)).to.throw();
     });
 
 });
