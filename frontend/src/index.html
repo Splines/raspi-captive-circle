@@ -8,15 +8,20 @@
 
     <script src="../node_modules/axios/dist/axios.min.js"></script>
     <script src="../node_modules/hammerjs/hammer.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="/src/style.css">
+
+    <link rel="stylesheet" href="/src/style.css">
+    <link rel="stylesheet" href="/src/particle-style.css">
 </head>
 
 <body>
+    <canvas id="background-particle-canvas"></canvas>
+
     <button id="ready-btn" type="button">
         Get ready
     </button>
 
     <script src="/src/color.js"></script>
+    <script src="/src/particles.js"></script>
     <script src="/src/fullscreen.js"></script>
     <script src="/src/gesture.js"></script>
     <script src="/src/login.js"></script>

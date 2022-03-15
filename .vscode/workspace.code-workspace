@@ -10,5 +10,8 @@
 			"path": "../frontend"
 		}
 	],
-	"settings": {}
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "frontend",
+		"liveServer.settings.port": 5501
+	}
 }
