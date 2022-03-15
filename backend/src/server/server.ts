@@ -48,7 +48,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 /////////////////////////////// Endpoints //////////////////////////////////////
 
 app.get('/', (req, res, next) => {
-    res.sendFile(path.join(FRONTEND_FOLDER, 'src/index.html'));
+    res.sendFile(path.join(FRONTEND_FOLDER, 'src/main/index.html'));
 });
 
 app.get('/admin', (req, res, next) => {
