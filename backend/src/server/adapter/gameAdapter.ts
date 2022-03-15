@@ -38,4 +38,8 @@ export class GameAdapter {
         return this.connectionPlayerManager.getPlayerBy(connection);
     }
 
+    getAllConnections() {
+        return this.connectionPlayerManager.getAllConnections();
+    }
+
 }

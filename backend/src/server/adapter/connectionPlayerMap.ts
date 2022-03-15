@@ -40,6 +40,10 @@ export class ConnectionPlayerManager {
         return Array.from(this.connectionPlayerMap.values());
     }
 
+    getAllConnections(): Connection[] {
+        return Array.from(this.playerConnectionMap.values());
+    }
+
     getConnectionFor(player: Player) {
         return this.playerConnectionMap.get(player);
     }

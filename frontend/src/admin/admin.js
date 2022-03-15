@@ -6,3 +6,12 @@ document.getElementById('start-btn').onclick = async () => {
         console.error(error);
     }
 }
+
+document.getElementById('showcase-btn').onclick = async () => {
+    try {
+        const res = await axios.post('/api/admin/start-showcase', { withCredentials: true });
+        console.log(res.data);
+    } catch (error) {
+        console.error(error);
+    }
+}

@@ -6,6 +6,7 @@ import { isAuthenticated, isAuthenticatedMiddleware, sessionParser } from './con
 import { websocketServer } from './connection/websocket';
 import { login } from './endpoints/login';
 import { getReady } from './endpoints/ready';
+import { showcase } from './endpoints/showcase';
 import { startGame } from './endpoints/start';
 
 const HOST_NAME = 'captive.circle';
@@ -57,7 +58,9 @@ app.get('/admin', (req, res, next) => {
 app.post('/api/login', login);
 app.post('/api/ready', isAuthenticatedMiddleware, getReady);
 
+// TODO: authenticate these routes (e.g. simply with a password)
 app.post('/api/admin/start', startGame);
+app.post('/api/admin/start-showcase', showcase);
 
 
 ///////////////////////////// Server listening /////////////////////////////////
