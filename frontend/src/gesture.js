@@ -5,8 +5,7 @@ const swellPleng = new Audio('/assets/audio/Swell-Pleng-Short-Attack.mp3');
 const swellPlengDark = new Audio('/assets/audio/Swell-Pleng-Dark.mp3');
 
 function handleGestures(ws) {
-    const gestureArea = document.getElementById('gesture-area');
-    const mc = new Hammer.Manager(gestureArea);
+    const mc = new Hammer.Manager(document.documentElement);
     mc.add(new Hammer.Swipe({ event: 'oneFingerHorizontalSwipe', pointers: 1, direction: DIRECTION_HORIZONTAL }));
     mc.add(new Hammer.Swipe({ event: 'twoFingersHorizontalSwipe', pointers: 2, direction: DIRECTION_HORIZONTAL }));
 

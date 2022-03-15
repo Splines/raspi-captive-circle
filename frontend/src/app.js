@@ -19,6 +19,7 @@ readyButton.onclick = async () => {
     } catch (error) {
         console.error(error);
     }
+    enterFullscreen(document.documentElement);
 }
 
 function handleTimeoutElimination() {
