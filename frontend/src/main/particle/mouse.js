@@ -1,18 +1,7 @@
 class RadiusMouse {
 
-    x = null;
-    y = null;
-    radius = null;
+    x = undefined;
+    y = undefined;
+    radius = 110;
 
-    constructor() {
-        this.initMouseRadius();
-    }
-
-    initMouseRadius() {
-        this.radius = 110;
-    }
-
-    shrinkRadiusToZero() {
-        this.radius = 0;
-    }
 }

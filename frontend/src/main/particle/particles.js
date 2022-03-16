@@ -23,29 +23,57 @@ window.addEventListener('resize', () => {
 //////////////////////////////// Mouse/Touch ///////////////////////////////////
 
 const mouse = new RadiusMouse();
+let pressing = false;
 
-let mouseRadiusZeroTimeout;
-canvas.addEventListener('mousemove', event => {
-    if (mouseRadiusZeroTimeout)
-        clearTimeout(mouseRadiusZeroTimeout);
-    mouse.initMouseRadius();
+canvas.addEventListener('mousedown', event => {
     mouse.x = event.x;
     mouse.y = event.y;
-    mouseRadiusZeroTimeout = setTimeout(() => mouse.shrinkRadiusToZero(), 50);
+});
+
+canvas.addEventListener('mousemove', event => {
+    if (typeof event === 'object') {
+        if (event.buttons >= 1) {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        }
+    }
+
 });
 
 canvas.addEventListener('mouseout', event => {
-    mouse.x = null;
-    mouse.y = null;
+    mouse.x = undefined;
+    mouse.y = undefined;
 });
 
 canvas.addEventListener('touchmove', event => {
-    const touch = event.touches[0]; // Only single touch
+    const touch = event.touches[0];
     const mouseEvent = new MouseEvent('mousemove', {
+        clientX: touch.clientX,
+        clientY: touch.clientY,
+        buttons: 1
+    });
+    canvas.dispatchEvent(mouseEvent);
+});
+
+canvas.addEventListener('mouseup', event => {
+    // Resize particles close to mouse
+    for (const particle of particles) {
+        const distance = Math.pow(mouse.x - particle.x, 2) + Math.pow(mouse.y - particle.y, 2);
+        if (distance < 60 * mouse.radius) {
+            particle.size += 8;
+            particle.draw();
+        }
+    }
+    mouse.x = undefined;
+    mouse.y = undefined;
+});
+
+canvas.addEventListener('touchend', event => {
+    const touch = event.changedTouches[0]; // Only single touch
+    const mouseEvent = new MouseEvent('mouseup', {
         clientX: touch.clientX,
         clientY: touch.clientY
     });
-    // Delegate touchmove to mousemove
     canvas.dispatchEvent(mouseEvent);
 });
 
@@ -57,14 +85,11 @@ let particles;
  * Initializes the particles of the canvas
  */
 function initParticles() {
+    const colors = ['#F656CB', '#DE4367', '#FA594B', '#CA43DE', '#B44BFA'];
     particles = [];
-
-    // Particles count
-    const x = canvas.clientWidth * canvas.clientHeight;
-    const particlesCount = Math.floor(350 * (1 - Math.exp(-0.0000015 * x)));
-
-    for (let i = 0; i < particlesCount; i++) {
-        particles.push(Particle.initRandom(context));
+    for (let i = 0; i < 4000; i++) {
+        const randomColor = colors[Math.random() * colors.length >> 0];
+        particles.push(Particle.initRandom(context, randomColor));
     }
 }
 
@@ -76,7 +101,7 @@ function step(timestamp) {
 
     context.clear(true);
     for (const particle of particles) {
-        particle.update(deltaTime);
+        particle.update(deltaTime, mouse);
     }
 
     lastFrameTime = timestamp; // as reference for next frame
