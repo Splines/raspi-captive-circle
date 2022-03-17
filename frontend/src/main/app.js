@@ -24,6 +24,21 @@ const readyButton = document.getElementById('ready-btn');
 //     enterFullscreen(document.documentElement);
 // }
 
+
+// Fullscreen handling
+let isFullscreen = false;
+const blob = document.getElementById('clickable-blob');
+blob.addEventListener('click', () => {
+    if (isFullscreen) {
+        exitFullscreen(document.body);
+        isFullscreen = false;
+    } else {
+        enterFullscreen(document.body);
+        isFullscreen = true;
+    }
+});
+
+
 function handleTimeoutElimination() {
     console.log('Handle elimination timeout');
     document.body.style.backgroundColor = ELIMINATION_COLOR;
