@@ -5,7 +5,7 @@ document.getElementById('start-btn').onclick = async () => {
     } catch (error) {
         console.error(error);
     }
-}
+};
 
 document.getElementById('showcase-btn').onclick = async () => {
     try {
@@ -14,4 +14,13 @@ document.getElementById('showcase-btn').onclick = async () => {
     } catch (error) {
         console.error(error);
     }
-}
+};
+
+document.getElementById('start-calibrating').onclick = async () => {
+    try {
+        const res = await axios.post('/api/admin/start-calibrate', { withCredentials: true });
+        console.log(res.data);
+    } catch (error) {
+        console.error(error);
+    }
+};

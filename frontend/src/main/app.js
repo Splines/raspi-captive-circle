@@ -3,17 +3,20 @@
 
     ws.onmessage = event => {
         const msg = event.data;
+        console.log(`Got message: ${msg}`);
         if (msg == 'ELIMINATION_TIMEOUT')
             return handleTimeoutElimination();
         else if (msg == 'SHOWCASE')
             return handleShowcase();
+        else if (msg == 'CALIBRATE')
+            return transitionToCalibrateMode();
     }
 
     handleGestures(ws);
 })();
 
 // Ready button
-const readyButton = document.getElementById('ready-btn');
+// const readyButton = document.getElementById('ready-btn');
 // readyButton.onclick = async () => {
 //     try {
 //         const res = await axios.post('/api/ready', { withCredentials: true });

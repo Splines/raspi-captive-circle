@@ -14,6 +14,10 @@ export class ConnectionManager {
             this.connections.delete(connectionToRemove);
     }
 
+    getAllConnectionsSet(): Set<Connection> {
+        return new Set(this.connections);
+    }
+
     findConnectionById(uuid: string): Connection | null {
         for (const connection of this.connections) {
             if (connection.uuid === uuid)
@@ -47,6 +51,8 @@ export class Connection {
     sendIfPossible(msg: string) {
         if (this.socket)
             this.socket.send(msg);
+        else
+            console.error('Could not send msg: ', msg);
     }
 
 }

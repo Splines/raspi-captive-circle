@@ -4,6 +4,7 @@ import path from 'path';
 import { Duplex } from 'stream';
 import { isAuthenticated, isAuthenticatedMiddleware, sessionParser } from './connection/session';
 import { websocketServer } from './connection/websocket';
+import { startCalibrate } from './endpoints/calibrate';
 import { login } from './endpoints/login';
 import { getReady } from './endpoints/ready';
 import { showcase } from './endpoints/showcase';
@@ -61,6 +62,7 @@ app.post('/api/ready', isAuthenticatedMiddleware, getReady);
 // TODO: authenticate these routes (e.g. simply with a password)
 app.post('/api/admin/start', startGame);
 app.post('/api/admin/start-showcase', showcase);
+app.post('/api/admin/start-calibrate', startCalibrate);
 
 
 ///////////////////////////// Server listening /////////////////////////////////
