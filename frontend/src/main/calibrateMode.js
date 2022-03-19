@@ -65,6 +65,9 @@ function readyOnTransitionEnd(event) {
     middleText.removeEventListener('transitionend', readyOnTransitionEnd);
     middleText.innerHTML = "Yeah, you're ready";
     middleText.classList.remove('fade');
+
+    const arrow = document.getElementById('arrow-left-double-img');
+    arrow.style.opacity = 1;
 }
 
 // Fullscreen handling

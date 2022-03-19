@@ -153,3 +153,31 @@ p {
     animation: 1s ease-in-out infinite alternate-reverse pulse-scale;
     animation-delay: 400ms;
 }
+
+#arrow-left-double {
+    display: flex;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    justify-content: center;
+    align-content: center;
+    /* to show in front of backdrop */
+    z-index: 1;
+}
+
+#arrow-left-double-img {
+    width: 100px;
+    opacity: 0;
+    transition: opacity 1s linear;
+    animation: 600ms ease-in-out infinite alternate  wiggle-left;
+}
+
+@keyframes wiggle-left {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-10px);
+    }
+}
