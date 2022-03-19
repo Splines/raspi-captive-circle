@@ -55,6 +55,9 @@ async function handleGetReady() {
     const successGradient = document.getElementById('background-gradient-success');
     successGradient.style.opacity = 1;
 
+    const normalGradient = document.getElementById('background-gradient');
+    normalGradient.style.opacity = 0;
+
     // Checkmark
     checkmark.style.opacity = 1;
     checkmark.style.zIndex = 1000;
@@ -82,7 +85,7 @@ function onCheckmarkFullscreen() {
     }
 }
 
-
+// Flicker for calibration check
 const flickerDiv = document.getElementById('background-gradient-flicker');
 async function checkCalibration() {
     // Flicker once

@@ -4,6 +4,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(#6cd0ff, #315fdd);
+    /* background: radial-gradient(#6cd0ff, #315fdd); */
     z-index: -1;
+    display: none;
 }

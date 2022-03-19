@@ -9,7 +9,7 @@ body {
     overscroll-behavior: none;
     overflow: hidden;
     min-height: 100vh;
-    background: radial-gradient(#6cd0ff, #315fdd);
+    /* background: radial-gradient(#6cd0ff, #315fdd); */
 }
 
 p {
@@ -108,4 +108,6 @@ p {
     left: 0;
     background: radial-gradient(#6cd0ff, #315fdd);
     z-index: -1;
+    transition: opacity 1.2s linear;
+    opacity: 1;
 }

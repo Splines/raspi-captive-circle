@@ -60,7 +60,7 @@ app.post('/api/login', login);
 app.post('/api/ready', isAuthenticatedMiddleware, getReady);
 
 // TODO: authenticate these routes (e.g. simply with a password)
-app.post('/api/admin/start', startGame);
+app.post('/api/admin/start-game', startGame);
 app.post('/api/admin/start-showcase', showcase);
 app.post('/api/admin/start-calibrate', startCalibrate);
 app.post('/api/admin/check-calibration', checkCalibration);

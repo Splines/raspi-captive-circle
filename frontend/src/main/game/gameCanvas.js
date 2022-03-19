@@ -1,3 +1,20 @@
+async function startGame() {
+
+    // Show default background above everything (so far)
+    const backgroundGradient = document.getElementById('background-gradient');
+    // background gradient should have opacity 0 at this point
+    // strangely, if we set opacity to 0 manually at this point,
+    // there won't be any transition later from opacity 0 to 1
+    backgroundGradient.style.zIndex = 1999;
+    backgroundGradient.style.opacity = 1;
+
+    // Show canvas above everything
+    const backgroundCanvas = document.getElementById('background-particle-canvas');
+    backgroundCanvas.style.zIndex = 2000;
+    backgroundCanvas.style.display = 'flex'; // show canvas for the first time
+    resizeCanvas();
+}
+
 ////////////////////////////////// Canvas //////////////////////////////////////
 
 const canvas = document.getElementById('background-particle-canvas');
@@ -6,7 +23,6 @@ const context = canvas.getContext('2d');
 function resizeCanvas() {
     context.setupSize(window.innerWidth, window.innerHeight);
 }
-resizeCanvas();
 
 let resizeEvent;
 window.addEventListener('resize', () => {
