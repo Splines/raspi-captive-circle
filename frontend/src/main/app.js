@@ -15,23 +15,10 @@
     handleGestures(ws);
 })();
 
-// Ready button
-// const readyButton = document.getElementById('ready-btn');
-// readyButton.onclick = async () => {
-//     try {
-//         const res = await axios.post('/api/ready', { withCredentials: true });
-//         console.log(res.data);
-//     } catch (error) {
-//         console.error(error);
-//     }
-//     enterFullscreen(document.documentElement);
-// }
-
-
 // Fullscreen handling
+document.getElementById('clickable-blob').addEventListener('click', onBlobFullscreen);
 let isFullscreen = false;
-const blob = document.getElementById('clickable-blob');
-blob.addEventListener('click', () => {
+function onBlobFullscreen() {
     if (isFullscreen) {
         exitFullscreen(document.body);
         isFullscreen = false;
@@ -39,8 +26,7 @@ blob.addEventListener('click', () => {
         enterFullscreen(document.body);
         isFullscreen = true;
     }
-});
-
+}
 
 function handleTimeoutElimination() {
     console.log('Handle elimination timeout');
@@ -62,5 +48,4 @@ async function handleShowcase() {
             await sleep(120);
         }
     }
-
 }

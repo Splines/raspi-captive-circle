@@ -10,6 +10,6 @@ export async function getReady(req: Request, res: Response) {
 
     gameAdapter.registerPlayerFromConnection(connection);
 
-    res.send("Ready for the game");
+    res.send("Player is ready for the game");
 }
 
