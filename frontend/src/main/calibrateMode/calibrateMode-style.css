@@ -29,8 +29,8 @@
 }
 
 #checkmark-img {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     align-self: center;
     margin-top: 6rem;
     animation: 1s ease-in-out infinite alternate-reverse pulse-scale;

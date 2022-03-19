@@ -47,7 +47,7 @@ async function handleGetReady() {
     }
 
     // Change text
-    middleText.style.marginBottom = '6rem';
+    middleText.style.marginBottom = '4rem';
     middleText.addEventListener('transitionend', readyOnTransitionEnd);
     middleText.classList.add('fade');
 

@@ -10,6 +10,7 @@
             return handleShowcase();
         else if (msg == 'CALIBRATE')
             return transitionToCalibrateMode();
+        console.log('Could not handle the message received');
     }
 
     handleGestures(ws);
