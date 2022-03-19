@@ -1,6 +1,6 @@
 document.getElementById('start-btn').onclick = async () => {
     try {
-        const res = await axios.post('/api/admin/start', { withCredentials: true });
+        const res = await axios.post('/api/admin/start-game', { withCredentials: true });
         console.log(res.data);
     } catch (error) {
         console.error(error);
@@ -19,6 +19,15 @@ document.getElementById('showcase-btn').onclick = async () => {
 document.getElementById('start-calibrating').onclick = async () => {
     try {
         const res = await axios.post('/api/admin/start-calibrate', { withCredentials: true });
+        console.log(res.data);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+document.getElementById('check-calibration').onclick = async () => {
+    try {
+        const res = await axios.post('/api/admin/check-calibration', { withCredentials: true });
         console.log(res.data);
     } catch (error) {
         console.error(error);

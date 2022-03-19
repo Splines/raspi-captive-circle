@@ -10,6 +10,8 @@
             return handleShowcase();
         else if (msg == 'CALIBRATE')
             return transitionToCalibrateMode();
+        else if (msg == 'CALIBRATION_CHECK')
+            return checkCalibration();
         console.log('Could not handle the message received');
     }
 

@@ -81,3 +81,20 @@ function onCheckmarkFullscreen() {
         isFullscreen = true;
     }
 }
+
+
+const flickerDiv = document.getElementById('background-gradient-flicker');
+async function checkCalibration() {
+    // Flicker once
+    const sleep = (ms) => new Promise(res => setTimeout(res, ms));
+    flickerDiv.style.zIndex = 1001;
+    flickerDiv.style.opacity = 1;
+    await sleep(1000);
+    flickerDiv.addEventListener('transitionend', adjustZIndexFlicker);
+    flickerDiv.style.opacity = 0;
+}
+
+function adjustZIndexFlicker() {
+    flickerDiv.style.zIndex = -1;
+    flickerDiv.removeEventListener('transitionend', adjustZIndexFlicker);
+}
