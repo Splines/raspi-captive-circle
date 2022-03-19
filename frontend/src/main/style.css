@@ -17,12 +17,9 @@ p {
     opacity: 1;
 }
 
-
 /* 
- * This class is for fade in effect which remains 
- * even after transiton is over.
- */
-
+ * Fade in effect class
+*/
 .fade {
     opacity: 0;
     transition: opacity 500ms cubic-bezier(0.55, 0.085, 0.68, 0.53);
@@ -45,13 +42,14 @@ p {
 
 #starting-soon-text {
     transition: opacity 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                margin-bottom 800ms ease-in-out;
+        margin-bottom 800ms ease-in-out;
 }
 
 @keyframes pulse-scale {
     from {
         transform: scale(1.05);
     }
+
     to {
         transform: scale(1);
     }
@@ -90,6 +88,7 @@ p {
     from {
         width: 80%;
     }
+
     to {
         width: 100%;
     }
@@ -100,9 +99,6 @@ p {
     z-index: 3;
 }
 
-
-/* Background gradient */
-
 #background-gradient {
     position: absolute;
     min-height: 100vh;
@@ -112,72 +108,4 @@ p {
     left: 0;
     background: radial-gradient(#6cd0ff, #315fdd);
     z-index: -1;
-}
-
-#background-gradient-success {
-    position: absolute;
-    min-height: 100vh;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: radial-gradient(#1DF2CB, #0D7F8C);
-    opacity: 0;
-    transition: opacity 0.4s linear;
-    z-index: 0;
-}
-
-
-/* #0A0E26 #0F2F59 #0D7F8C #14A6A6 #1DF2CB */
-
-#checkmark {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    transition: opacity 1s linear;
-    opacity: 0;
-    /* z-index gets increased later via JS */
-    z-index: -1;
-}
-
-#checkmark-img {
-    width: 100px;
-    height: 100px;
-    align-self: center;
-    margin-top: 6rem;
-    animation: 1s ease-in-out infinite alternate-reverse pulse-scale;
-    animation-delay: 400ms;
-}
-
-#arrow-left-double {
-    display: flex;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    justify-content: center;
-    align-content: center;
-    /* to show in front of backdrop */
-    z-index: 1;
-}
-
-#arrow-left-double-img {
-    width: 100px;
-    opacity: 0;
-    transition: opacity 1s linear;
-    animation: 600ms ease-in-out infinite alternate  wiggle-left;
-}
-
-@keyframes wiggle-left {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-10px);
-    }
 }
