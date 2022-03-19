@@ -1,6 +1,7 @@
 const middleText = document.getElementById('starting-soon-text');
 const blobDivs = document.getElementsByClassName('blob-div');
 const blob = document.getElementById('clickable-blob');
+const checkmark = document.getElementById('checkmark');
 
 function transitionToCalibrateMode() {
     // Resize blob
@@ -32,10 +33,12 @@ async function handleGetReady() {
     } catch (error) {
         console.error(error);
     }
-    if (!isFullscreen)
+    if (!isFullscreen) {
         enterFullscreen(document.documentElement);
+        isFullscreen = true;
+    }
 
-    // Remove click listener
+    // Remove click listenerg
     blob.removeEventListener('click', handleGetReady);
 
     // Remove blob
@@ -53,7 +56,6 @@ async function handleGetReady() {
     successGradient.style.opacity = 1;
 
     // Checkmark
-    const checkmark = document.getElementById('checkmark');
     checkmark.style.opacity = 1;
     checkmark.style.zIndex = 1000;
 }
@@ -63,5 +65,16 @@ function readyOnTransitionEnd(event) {
     middleText.removeEventListener('transitionend', readyOnTransitionEnd);
     middleText.innerHTML = "Yeah, you're ready";
     middleText.classList.remove('fade');
+}
 
+// Fullscreen handling
+document.getElementById('checkmark-img').addEventListener('click', onCheckmarkFullscreen);
+function onCheckmarkFullscreen() {
+    if (isFullscreen) {
+        exitFullscreen(document.body);
+        isFullscreen = false;
+    } else {
+        enterFullscreen(document.body);
+        isFullscreen = true;
+    }
 }
