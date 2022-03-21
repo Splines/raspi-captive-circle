@@ -9,20 +9,11 @@ function transitionToCalibrateMode() {
         blobDiv.style.width = '150vh'; // we set vh not vw on purpose
     }
 
-    // Change text
-    middleText.addEventListener("transitionend", calibrateOnTransitionEnd);
-    middleText.classList.add('fade');
+    fadeToText(middleText, "Tap when it's your turn");
 
     // Change click listener
     blob.removeEventListener('click', onBlobFullscreen);
     blob.addEventListener('click', handleGetReady);
-}
-
-function calibrateOnTransitionEnd() {
-    // Text transition end
-    middleText.removeEventListener('transitionend', calibrateOnTransitionEnd);
-    middleText.innerHTML = "Tap when it's your turn";
-    middleText.classList.remove('fade');
 }
 
 async function handleGetReady() {
@@ -48,8 +39,10 @@ async function handleGetReady() {
 
     // Change text
     middleText.style.marginBottom = '4rem';
-    middleText.addEventListener('transitionend', readyOnTransitionEnd);
-    middleText.classList.add('fade');
+    fadeToText(middleText, "Yeah, you're ready", () => {
+        const arrow = document.getElementById('arrow-left-double-img');
+        arrow.style.opacity = 1;
+    });
 
     // Change background
     const successGradient = document.getElementById('background-gradient-success');
@@ -61,16 +54,6 @@ async function handleGetReady() {
     // Checkmark
     checkmark.style.opacity = 1;
     checkmark.style.zIndex = 1000;
-}
-
-function readyOnTransitionEnd(event) {
-    // Text transition end
-    middleText.removeEventListener('transitionend', readyOnTransitionEnd);
-    middleText.innerHTML = "Yeah, you're ready";
-    middleText.classList.remove('fade');
-
-    const arrow = document.getElementById('arrow-left-double-img');
-    arrow.style.opacity = 1;
 }
 
 // Fullscreen handling
@@ -88,16 +71,18 @@ function onCheckmarkFullscreen() {
 // Flicker for calibration check
 const flickerDiv = document.getElementById('background-gradient-flicker');
 async function checkCalibration() {
-    // Flicker once
     const sleep = (ms) => new Promise(res => setTimeout(res, ms));
+
     flickerDiv.style.zIndex = 1001;
     flickerDiv.style.opacity = 1;
+
+    // Flicker once
     await sleep(1000);
+
+    function adjustZIndexFlicker() {
+        flickerDiv.style.zIndex = -1;
+        flickerDiv.removeEventListener('transitionend', adjustZIndexFlicker);
+    }
     flickerDiv.addEventListener('transitionend', adjustZIndexFlicker);
     flickerDiv.style.opacity = 0;
-}
-
-function adjustZIndexFlicker() {
-    flickerDiv.style.zIndex = -1;
-    flickerDiv.removeEventListener('transitionend', adjustZIndexFlicker);
 }
