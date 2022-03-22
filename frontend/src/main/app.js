@@ -33,11 +33,6 @@ function onBlobFullscreen() {
     }
 }
 
-function handleTimeoutElimination() {
-    console.log('Handle elimination timeout');
-    document.body.style.backgroundColor = ELIMINATION_COLOR;
-}
-
 async function handleShowcase() {
     const sleep = ms => new Promise(res => setTimeout(res, ms));
 

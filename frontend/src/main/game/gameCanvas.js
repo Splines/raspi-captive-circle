@@ -5,6 +5,7 @@ async function startGame() {
     // background gradient should have opacity 0 at this point
     // strangely, if we set opacity to 0 manually at this point,
     // there won't be any transition later from opacity 0 to 1
+    // backgroundGradient.style.opacity = 0;
     backgroundGradient.style.zIndex = 1999;
     backgroundGradient.style.opacity = 1;
 
@@ -13,6 +14,11 @@ async function startGame() {
     backgroundCanvas.style.zIndex = 2000;
     backgroundCanvas.style.display = 'flex'; // show canvas for the first time
     resizeCanvas();
+
+    // Remove elements below
+    // TODO: semantically this should not be part of this file
+    const checkmark = document.getElementById('checkmark');
+    checkmark.style.display = 'None';
 }
 
 ////////////////////////////////// Canvas //////////////////////////////////////

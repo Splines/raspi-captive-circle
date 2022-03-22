@@ -26,7 +26,7 @@ export class GameAdapter {
 
     doPassOnMove(action: PassOnAction) {
         if (!this.game)
-            throw Error('Trying to make a move, but game is not initialized yet');
+            return console.error('Trying to make a move, but game is not initialized yet');
         this.game.passOn(action);
     }
 
