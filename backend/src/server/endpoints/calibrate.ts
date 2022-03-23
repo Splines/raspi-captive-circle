@@ -12,7 +12,7 @@ export async function startCalibrate(req: Request, res: Response) {
 export async function checkCalibration(req: Request, res: Response) {
     const sleep = (ms: number) => new Promise(res => setTimeout(res, ms));
 
-    const connections = gameAdapter.getAllConnections();
+    const connections = gameAdapter.getAllConnectionsSorted();
     for (const connection of connections) {
         connection.sendIfPossible('CALIBRATION_CHECK');
         await sleep(600);

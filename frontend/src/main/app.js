@@ -12,6 +12,8 @@
             return transitionToCalibrateMode();
         else if (msg == 'CALIBRATION_CHECK')
             return checkCalibration();
+        else if (msg == 'SPIN')
+            return flickerForRandomSpin();
         else if (msg == 'START_GAME')
             return startGame(ws);
         else if (msg == 'YOUR_TURN')

@@ -40,8 +40,18 @@ export class ConnectionPlayerManager {
         return Array.from(this.connectionPlayerMap.values());
     }
 
-    getAllConnections(): Connection[] {
+    getAllConnectionsUnsorted(): Connection[] {
         return Array.from(this.playerConnectionMap.values());
+
+    }
+
+    getAllConnectionsSorted(): Connection[] {
+        const connectionsSorted = [];
+        for (const player of this.players) {
+            const connection = this.getConnectionFor(player);
+            connectionsSorted.push(connection);
+        }
+        return connectionsSorted;
     }
 
     getConnectionFor(player: Player): Connection {

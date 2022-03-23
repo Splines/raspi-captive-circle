@@ -15,9 +15,9 @@ export class GameAdapter {
         this.eliminationObserver = eliminationObserver;
     }
 
-    initGame() {
+    initGame(initialPlayer: Player) {
         const players = this.connectionPlayerManager.getAllPlayers();
-        this.game = new Game(players, this.eliminationObserver);
+        this.game = new Game(players, initialPlayer, this.eliminationObserver);
     }
 
     registerPlayerFromConnection(connection: Connection) {
@@ -48,8 +48,12 @@ export class GameAdapter {
         return this.connectionPlayerManager.getPlayerBy(connection);
     }
 
-    getAllConnections() {
-        return this.connectionPlayerManager.getAllConnections();
+    getAllConnectionsUnsorted(): Connection[] {
+        return this.connectionPlayerManager.getAllConnectionsUnsorted();
+    }
+
+    getAllConnectionsSorted(): Connection[] {
+        return this.connectionPlayerManager.getAllConnectionsSorted();
     }
 
 }

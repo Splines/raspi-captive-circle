@@ -15,6 +15,7 @@ export class Game {
 
     constructor(
         players: Player[],
+        initialPlayer: Player,
         playersObserver: EliminatedPlayersObserver,
         time_threshold_ms = 1500
     ) {
@@ -24,7 +25,7 @@ export class Game {
         this.circle = new Circle(players);
 
         // First player is first registered player
-        this.activePlayer = players[0];
+        this.activePlayer = initialPlayer;
 
         // Initialize Timer for elimination of players
         this.time_threshold_ms = time_threshold_ms;

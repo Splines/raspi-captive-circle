@@ -73,16 +73,8 @@ const flickerDiv = document.getElementById('background-gradient-flicker');
 async function checkCalibration() {
     const sleep = (ms) => new Promise(res => setTimeout(res, ms));
 
-    flickerDiv.style.zIndex = 1001;
-    flickerDiv.style.opacity = 1;
-
     // Flicker once
+    flickerDiv.style.opacity = 1;
     await sleep(1000);
-
-    function adjustZIndexFlicker() {
-        flickerDiv.style.zIndex = -1;
-        flickerDiv.removeEventListener('transitionend', adjustZIndexFlicker);
-    }
-    flickerDiv.addEventListener('transitionend', adjustZIndexFlicker);
     flickerDiv.style.opacity = 0;
 }

@@ -13,7 +13,7 @@ describe('Captive Circle Game', function () {
             public updateElimination(player: Player): void {
             }
         }
-        const game: Game = new Game(players, new MyEliminatedPlayersObserver());
+        const game: Game = new Game(players, players[0], new MyEliminatedPlayersObserver());
 
         expect(game.getActivePlayer()).to.equal(players[0]);
         game.passOn(PassOnAction.CLOCKWISE);
@@ -50,7 +50,7 @@ describe('Captive Circle Game', function () {
                 eliminated.push(player);
             }
         }
-        const game: Game = new Game(players, new MyEliminatedPlayersObserver(), 200);
+        const game: Game = new Game(players, players[0], new MyEliminatedPlayersObserver(), 200);
 
         expect(game.getActivePlayer()).to.equal(players[0]);
         game.passOn(PassOnAction.CLOCKWISE);
