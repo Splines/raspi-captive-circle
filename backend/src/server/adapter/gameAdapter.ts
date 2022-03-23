@@ -44,10 +44,10 @@ export class GameAdapter {
         if (isMoveHintActive) {
             // Inform next player
             this.getPlayerConnection(nextPlayer).sendIfPossible('YOUR_TURN');
-
-            // Inform current player that his/her move ended
-            this.getPlayerConnection(activePlayer).sendIfPossible('YOUR_TURN_ENDED');
         }
+
+        // Inform current player that his/her move ended
+        this.getPlayerConnection(activePlayer).sendIfPossible('YOUR_TURN_ENDED');
     }
 
     eliminatePlayer(player: Player) {
