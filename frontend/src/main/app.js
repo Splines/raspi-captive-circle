@@ -14,7 +14,10 @@
             return checkCalibration();
         else if (msg == 'START_GAME')
             return startGame(ws);
-            return startGame();
+        else if (msg == 'YOUR_TURN')
+            return showMoveHint();
+        else if (msg == 'YOUR_TURN_ENDED')
+            return hideMoveHint();
         console.log('Could not handle the message received');
     }
 })();

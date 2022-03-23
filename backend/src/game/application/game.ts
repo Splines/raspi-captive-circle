@@ -40,12 +40,15 @@ export class Game {
     }
 
     passOn(action: PassOnAction): Player {
+        // TODO: All players eliminated handling (one winner)
         if (this.playersEliminatedCount == this.circle.getPlayers().length) {
             throw Error('All players eliminated, game should have ended');
         }
 
+        // Set next active player
         this.activePlayer = this.circle.getNeighbor(this.activePlayer, action);
         this.timer.resetAndStart();
+
         return this.activePlayer;
     }
 

@@ -27,7 +27,17 @@ export class GameAdapter {
     doPassOnMove(action: PassOnAction) {
         if (!this.game)
             return console.error('Trying to make a move, but game is not initialized yet');
-        this.game.passOn(action);
+
+        // Inform current player that his/her move ended
+        const activePlayer = this.game.getActivePlayer();
+        this.getPlayerConnection(activePlayer).sendIfPossible('YOUR_TURN_ENDED');
+
+        // Pass on
+        const nextPlayer = this.game.passOn(action);
+
+        // Inform next player
+        // TODO: conditionally inform
+        this.getPlayerConnection(nextPlayer).sendIfPossible('YOUR_TURN');
     }
 
     getPlayerConnection(player: Player): Connection {
