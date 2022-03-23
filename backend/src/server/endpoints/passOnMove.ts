@@ -4,6 +4,7 @@ import { Connection } from "../connection/connection";
 import { onWebSocketEvent } from "../connection/websocketEvent";
 import { gameAdapter } from "../instanceManager";
 import { Nullable } from "../util";
+import { gameStarted } from "./start";
 
 let lastPlayerEliminated: Nullable<Player> = null;
 
@@ -12,6 +13,12 @@ export function setLastPlayerEliminated(player: Player) {
 }
 
 function isAuthorizedToMakeMove(connection: Connection) {
+    // Has game started?
+    if (!gameStarted) {
+        console.log('❌ Game not yet started, cannot perform a pass on move');
+        return false;
+    }
+
     const player = gameAdapter.getPlayerBy(connection);
 
     // If player was eliminated, he/she has one last move to do

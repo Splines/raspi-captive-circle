@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { gameAdapter } from '../instanceManager';
 
+export let gameStarted = false;
+
 export async function startGame(req: Request, res: Response) {
     // Check if enough player
     const readyConnections = gameAdapter.getAllConnections();
@@ -13,5 +15,7 @@ export async function startGame(req: Request, res: Response) {
     for (const connection of playerConnections) {
         connection.sendIfPossible('START_GAME');
     }
+    gameStarted = true;
+
     res.send('Started game');
 }
