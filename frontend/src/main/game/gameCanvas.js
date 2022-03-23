@@ -23,6 +23,12 @@ async function startGame(ws) {
     checkmark.style.display = 'None';
 }
 
+function hideCanvas() {
+    // Hide canvas
+    const backgroundCanvas = document.getElementById('background-particle-canvas');
+    backgroundCanvas.style.zIndex = -1;
+}
+
 ////////////////////////////////// Canvas //////////////////////////////////////
 
 const canvas = document.getElementById('background-particle-canvas');

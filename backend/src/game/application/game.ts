@@ -28,12 +28,17 @@ export class Game {
         this.activePlayer = initialPlayer;
 
         // Initialize Timer for elimination of players
+
         this.time_threshold_ms = time_threshold_ms;
         this.timer = new Timer(() => {
-            this.playersEliminatedCount++;
-            this.activePlayer.eliminate();
+            this.eliminatePlayer(this.activePlayer);
             playersObserver.updateElimination(this.activePlayer);
         }, this.time_threshold_ms);
+    }
+
+    eliminatePlayer(player: Player) {
+        this.playersEliminatedCount++;
+        player.eliminate();
     }
 
     getActivePlayer(): Player {

@@ -4,6 +4,7 @@ import { PassOnAction } from "../../game/domain/action";
 import { Player } from "../../game/domain/player";
 import { Connection } from "../connection/connection";
 import { isMoveHintActive } from "../endpoints/moveHint";
+import { Nullable } from "../util";
 import { ConnectionPlayerManager } from "./connectionPlayerMap";
 
 export class GameAdapter {
@@ -43,6 +44,13 @@ export class GameAdapter {
         }
     }
 
+    eliminatePlayer(player: Player) {
+        if (!this.game)
+            return console.error('Trying to eliminate player, but game is not initialized yet');
+
+        this.game.eliminatePlayer(player);
+    }
+
     getPlayerConnection(player: Player): Connection {
         return this.connectionPlayerManager.getConnectionFor(player);
     }
@@ -63,6 +71,14 @@ export class GameAdapter {
         for (const connection of this.connectionPlayerManager.getAllConnectionsUnsorted()) {
             connection.sendIfPossible(message);
         }
+    }
+
+    getActivePlayer(): Nullable<Player> {
+        if (!this.game) {
+            console.error('Trying to get active player, but game is not initialized yet');
+            return null;
+        }
+        return this.game.getActivePlayer();
     }
 
 }

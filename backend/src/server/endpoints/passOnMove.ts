@@ -4,6 +4,7 @@ import { Connection } from "../connection/connection";
 import { onWebSocketEvent } from "../connection/websocketEvent";
 import { gameAdapter } from "../instanceManager";
 import { Nullable } from "../util";
+import { eliminateNotYourTurn } from "./eliminate";
 import { gameStarted } from "./start";
 
 let lastPlayerEliminated: Nullable<Player> = null;
@@ -21,6 +22,9 @@ function isAuthorizedToMakeMove(connection: Connection) {
 
     const player = gameAdapter.getPlayerBy(connection);
 
+    if (!isPlayerActivePlayer(connection))
+        return;
+
     // If player was eliminated, he/she has one last move to do
     if (player === lastPlayerEliminated) {
         lastPlayerEliminated = null; // Reset
@@ -31,6 +35,19 @@ function isAuthorizedToMakeMove(connection: Connection) {
     if (!authorized)
         console.log(`❌ Player already eliminated -> not authorized`);
     return authorized;
+}
+
+function isPlayerActivePlayer(connection: Connection) {
+    const player = gameAdapter.getPlayerBy(connection);
+    const activePlayer = gameAdapter.getActivePlayer();
+
+    // Check if current connection corresponds to active player
+    if (activePlayer && player === activePlayer)
+        return true;
+
+    // if not: eliminate player (connection)
+    eliminateNotYourTurn(player);
+    return false;
 }
 
 onWebSocketEvent("PASS_ON_CLOCKWISE", (connection: Connection) => {

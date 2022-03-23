@@ -6,6 +6,8 @@
         console.log(`Got message: ${msg}`);
         if (msg == 'ELIMINATION_TIMEOUT')
             return handleTimeoutElimination();
+        else if (msg == 'ELIMINATE_NOT_YOUR_TURN')
+            return handleNotYourTurnElimination();
         else if (msg == 'SHOWCASE')
             return handleShowcase();
         else if (msg == 'CALIBRATE')

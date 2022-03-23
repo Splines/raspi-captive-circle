@@ -6,7 +6,7 @@ import { setLastPlayerEliminated } from "./passOnMove";
 export class EliminatedTimeoutObserver extends EliminatedPlayersObserver {
 
     public updateElimination(player: Player): void {
-        console.log('💀 Eliminated a player');
+        console.log('💀 Eliminated a player (too slow)');
 
         setLastPlayerEliminated(player);
 
@@ -14,4 +14,10 @@ export class EliminatedTimeoutObserver extends EliminatedPlayersObserver {
         connection.sendIfPossible('ELIMINATION_TIMEOUT');
     }
 
+}
+
+export function eliminateNotYourTurn(player: Player) {
+    console.log('💀 Eliminated a player (not your turn)');
+    gameAdapter.eliminatePlayer(player);
+    gameAdapter.getPlayerConnection(player).sendIfPossible('ELIMINATE_NOT_YOUR_TURN');
 }
