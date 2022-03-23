@@ -13,11 +13,10 @@
         else if (msg == 'CALIBRATION_CHECK')
             return checkCalibration();
         else if (msg == 'START_GAME')
+            return startGame(ws);
             return startGame();
         console.log('Could not handle the message received');
     }
-
-    handleGestures(ws);
 })();
 
 // Fullscreen handling

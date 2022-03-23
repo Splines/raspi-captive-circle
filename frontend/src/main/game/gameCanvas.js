@@ -1,4 +1,6 @@
-async function startGame() {
+async function startGame(ws) {
+    // Gestures
+    handleGestures(ws);
 
     // Show default background above everything (so far)
     const backgroundGradient = document.getElementById('background-gradient');
