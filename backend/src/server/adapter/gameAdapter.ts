@@ -3,6 +3,7 @@ import { Game } from "../../game/application/game";
 import { PassOnAction } from "../../game/domain/action";
 import { Player } from "../../game/domain/player";
 import { Connection } from "../connection/connection";
+import { isMoveHintActive } from "../endpoints/moveHint";
 import { ConnectionPlayerManager } from "./connectionPlayerMap";
 
 export class GameAdapter {
@@ -28,16 +29,18 @@ export class GameAdapter {
         if (!this.game)
             return console.error('Trying to make a move, but game is not initialized yet');
 
-        // Inform current player that his/her move ended
         const activePlayer = this.game.getActivePlayer();
-        this.getPlayerConnection(activePlayer).sendIfPossible('YOUR_TURN_ENDED');
 
         // Pass on
         const nextPlayer = this.game.passOn(action);
 
-        // Inform next player
-        // TODO: conditionally inform
-        this.getPlayerConnection(nextPlayer).sendIfPossible('YOUR_TURN');
+        if (isMoveHintActive) {
+            // Inform next player
+            this.getPlayerConnection(nextPlayer).sendIfPossible('YOUR_TURN');
+
+            // Inform current player that his/her move ended
+            this.getPlayerConnection(activePlayer).sendIfPossible('YOUR_TURN_ENDED');
+        }
     }
 
     getPlayerConnection(player: Player): Connection {
@@ -54,6 +57,12 @@ export class GameAdapter {
 
     getAllConnectionsSorted(): Connection[] {
         return this.connectionPlayerManager.getAllConnectionsSorted();
+    }
+
+    broadcastMessage(message: string) {
+        for (const connection of this.connectionPlayerManager.getAllConnectionsUnsorted()) {
+            connection.sendIfPossible(message);
+        }
     }
 
 }

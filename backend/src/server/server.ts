@@ -6,6 +6,7 @@ import { isAuthenticated, isAuthenticatedMiddleware, sessionParser } from './con
 import { websocketServer } from './connection/websocket';
 import { checkCalibration, startCalibrate } from './endpoints/calibrate';
 import { login } from './endpoints/login';
+import { moveHint } from './endpoints/moveHint';
 import { getReady } from './endpoints/ready';
 import { showcase } from './endpoints/showcase';
 import { startGame } from './endpoints/start';
@@ -18,6 +19,7 @@ const server = http.createServer(app);
 
 app.use(express.static(FRONTEND_FOLDER));
 app.use(sessionParser);
+app.use(express.json());
 
 require('./instanceManager');
 
@@ -64,6 +66,7 @@ app.post('/api/admin/start-game', startGame);
 app.post('/api/admin/start-showcase', showcase);
 app.post('/api/admin/start-calibrate', startCalibrate);
 app.post('/api/admin/check-calibration', checkCalibration);
+app.post('/api/admin/move-hint', moveHint);
 
 
 ///////////////////////////// Server listening /////////////////////////////////
