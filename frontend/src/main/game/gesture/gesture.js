@@ -6,6 +6,8 @@ const swellPlengDark = new Audio('/assets/audio/Swell-Pleng-Dark.mp3');
 
 const mc = new Hammer.Manager(document.documentElement);
 
+let isLastGesture = false;
+
 function handleGestures(ws) {
     mc.add(new Hammer.Swipe({ event: 'oneFingerHorizontalSwipe', pointers: 1, direction: DIRECTION_HORIZONTAL }));
     mc.add(new Hammer.Swipe({ event: 'twoFingersHorizontalSwipe', pointers: 2, direction: DIRECTION_HORIZONTAL }));
@@ -17,6 +19,10 @@ function handleGestures(ws) {
             ? "PASS_ON_CLOCKWISE" : "PASS_ON_COUNTER_CLOCKWISE";
         console.log(`🎈 1 Finger: ${action}`);
         ws.send(action);
+        if (isLastGesture) {
+            removeGestureHandling();
+            handleLastGesture();
+        }
     });
 
     mc.on('twoFingersHorizontalSwipe', event => {
@@ -26,11 +32,19 @@ function handleGestures(ws) {
             ? "PASS_ON_CLOCKWISE_SKIP" : "PASS_ON_COUNTER_CLOCKWISE_SKIP";
         console.log(`🎈 2 Fingers: ${action}`);
         ws.send(action);
+        if (isLastGesture) {
+            removeGestureHandling();
+            handleLastGesture();
+        }
     });
-
 }
 
 function removeGestureHandling() {
+    console.log('Gesture handling removed');
     mc.remove('oneFingerHorizontalSwipe');
     mc.remove('twoFingersHorizontalSwipe');
+}
+
+function removeGestureHandlingOnNextGesture() {
+    isLastGesture = true;
 }

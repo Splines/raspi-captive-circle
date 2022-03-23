@@ -1,11 +1,29 @@
 import { PassOnAction } from "../../game/domain/action";
+import { Player } from "../../game/domain/player";
 import { Connection } from "../connection/connection";
 import { onWebSocketEvent } from "../connection/websocketEvent";
 import { gameAdapter } from "../instanceManager";
+import { Nullable } from "../util";
+
+let lastPlayerEliminated: Nullable<Player> = null;
+
+export function setLastPlayerEliminated(player: Player) {
+    lastPlayerEliminated = player;
+}
 
 function isAuthorizedToMakeMove(connection: Connection) {
     const player = gameAdapter.getPlayerBy(connection);
-    return !player?.isEliminated();
+
+    // If player was eliminated, he/she has one last move to do
+    if (player === lastPlayerEliminated) {
+        lastPlayerEliminated = null; // Reset
+        return true;
+    }
+
+    const authorized = !player.isEliminated();
+    if (!authorized)
+        console.log(`❌ Player already eliminated -> not authorized`);
+    return authorized;
 }
 
 onWebSocketEvent("PASS_ON_CLOCKWISE", (connection: Connection) => {

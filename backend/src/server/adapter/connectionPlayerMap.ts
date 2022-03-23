@@ -44,12 +44,18 @@ export class ConnectionPlayerManager {
         return Array.from(this.playerConnectionMap.values());
     }
 
-    getConnectionFor(player: Player) {
-        return this.playerConnectionMap.get(player);
+    getConnectionFor(player: Player): Connection {
+        const connection = this.playerConnectionMap.get(player);
+        if (!connection)
+            throw Error('No connection found for this player');
+        return connection;
     }
 
-    getPlayerBy(connection: Connection) {
-        return this.connectionPlayerMap.get(connection);
+    getPlayerBy(connection: Connection): Player {
+        const player = this.connectionPlayerMap.get(connection);
+        if (!player)
+            throw Error('No player found for this connection');
+        return player;
     }
 
 }

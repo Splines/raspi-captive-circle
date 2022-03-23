@@ -30,11 +30,11 @@ export class GameAdapter {
         this.game.passOn(action);
     }
 
-    getPlayerConnection(player: Player) {
+    getPlayerConnection(player: Player): Connection {
         return this.connectionPlayerManager.getConnectionFor(player);
     }
 
-    getPlayerBy(connection: Connection) {
+    getPlayerBy(connection: Connection): Player {
         return this.connectionPlayerManager.getPlayerBy(connection);
     }
 
