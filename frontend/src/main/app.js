@@ -22,6 +22,10 @@
             return showMoveHint();
         else if (msg == 'YOUR_TURN_ENDED')
             return hideMoveHint();
+        else if (msg == 'END_GAME')
+            return handleEndGame();
+        else if (msg == 'WINNER')
+            return handleWinner();
         console.log('Could not handle the message received');
     }
 })();

@@ -21,6 +21,12 @@ async function startGame(ws) {
     // TODO: semantically this should not be part of this file
     const checkmark = document.getElementById('checkmark');
     checkmark.style.display = 'None';
+
+    const arrow = document.getElementById('arrow-left-double-img');
+    arrow.style.display = 'None';
+
+    const middleText = document.getElementById('starting-soon-text');
+    middleText.style.marginBottom = '0';
 }
 
 function hideCanvas() {

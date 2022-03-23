@@ -10,6 +10,7 @@ export class Game {
     private activePlayer: Player;
     private timer: Timer;
     private playersEliminatedCount: number = 0;
+    private playersObserver: EliminatedPlayersObserver;
 
     private readonly time_threshold_ms: number;
 
@@ -27,18 +28,41 @@ export class Game {
         // First player is first registered player
         this.activePlayer = initialPlayer;
 
-        // Initialize Timer for elimination of players
 
+        // Initialize Timer for elimination of players
+        this.playersObserver = playersObserver;
         this.time_threshold_ms = time_threshold_ms;
         this.timer = new Timer(() => {
+            this.playersObserver.updateElimination(this.activePlayer);
             this.eliminatePlayer(this.activePlayer);
-            playersObserver.updateElimination(this.activePlayer);
         }, this.time_threshold_ms);
     }
 
     eliminatePlayer(player: Player) {
         this.playersEliminatedCount++;
         player.eliminate();
+
+        // Check if game is over
+        if (this.isGameOver()) {
+            const winners = this.getPlayerNotEliminated();
+            if (winners.length != 1)
+                throw Error('Found multiple winners, logic to determine game over is flawed');
+            this.playersObserver.updateWinner(winners[0]);
+        }
+    }
+
+    isGameOver(): boolean {
+        // Game is over if only one person is left
+        return this.playersEliminatedCount >= this.circle.getPlayers().length - 1;
+    }
+
+    private getPlayerNotEliminated(): Player[] {
+        const notEliminated = [];
+        for (const player of this.circle.getPlayers()) {
+            if (!player.isEliminated())
+                notEliminated.push(player);
+        }
+        return notEliminated;
     }
 
     getActivePlayer(): Player {
@@ -46,9 +70,8 @@ export class Game {
     }
 
     passOn(action: PassOnAction): Player {
-        // TODO: All players eliminated handling (one winner)
-        if (this.playersEliminatedCount == this.circle.getPlayers().length) {
-            throw Error('All players eliminated, game should have ended');
+        if (this.isGameOver()) {
+            throw Error('Game should have ended, no more pass on moves should be possible');
         }
 
         // Set next active player

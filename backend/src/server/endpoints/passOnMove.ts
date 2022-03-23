@@ -20,10 +20,15 @@ function isAuthorizedToMakeMove(connection: Connection) {
         return false;
     }
 
+    if (gameAdapter.isGameOver()) {
+        console.log('❌ Game has ended already, cannot perform a pass on move');
+        return false;
+    }
+
     const player = gameAdapter.getPlayerBy(connection);
 
     if (!isPlayerActivePlayer(connection))
-        return;
+        return false;
 
     // If player was eliminated, he/she has one last move to do
     if (player === lastPlayerEliminated) {

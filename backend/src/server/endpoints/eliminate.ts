@@ -14,6 +14,11 @@ export class EliminatedTimeoutObserver extends EliminatedPlayersObserver {
         connection.sendIfPossible('ELIMINATION_TIMEOUT');
     }
 
+    public updateWinner(player: Player): void {
+        gameAdapter.broadcastMessage('END_GAME');
+        gameAdapter.getPlayerConnection(player).sendIfPossible('WINNER');
+    }
+
 }
 
 export function eliminateNotYourTurn(player: Player) {

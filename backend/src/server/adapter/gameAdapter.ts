@@ -26,6 +26,12 @@ export class GameAdapter {
         this.connectionPlayerManager.registerPlayerFromConnection(connection);
     }
 
+    isGameOver(): boolean {
+        if (!this.game)
+            return false;
+        return this.game.isGameOver();
+    }
+
     doPassOnMove(action: PassOnAction) {
         if (!this.game)
             return console.error('Trying to make a move, but game is not initialized yet');

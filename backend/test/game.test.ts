@@ -12,6 +12,8 @@ describe('Captive Circle Game', function () {
         class MyEliminatedPlayersObserver extends EliminatedPlayersObserver {
             public updateElimination(player: Player): void {
             }
+            public updateWinner(player: Player): void {
+            }
         }
         const game: Game = new Game(players, players[0], new MyEliminatedPlayersObserver());
 
@@ -45,9 +47,13 @@ describe('Captive Circle Game', function () {
     it('Eliminate players', async function () {
         const players = [new Player("P0"), new Player("P1"), new Player("P2")];
         const eliminated: Player[] = [];
+        const winners: Player[] = [];
         class MyEliminatedPlayersObserver extends EliminatedPlayersObserver {
             public updateElimination(player: Player): void {
                 eliminated.push(player);
+            }
+            public updateWinner(player: Player): void {
+                winners.push(player);
             }
         }
         const game: Game = new Game(players, players[0], new MyEliminatedPlayersObserver(), 200);
@@ -76,19 +82,11 @@ describe('Captive Circle Game', function () {
         expect(eliminated).to.deep.equal([players[1]]);
         await sleep(300); // Eliminate P0
         expect(eliminated).to.deep.equal([players[1], players[0]]);
-        game.passOn(PassOnAction.CLOCKWISE); // P0 chooses next action
 
-        // Just P2 is left
-        game.passOn(PassOnAction.COUNTER_CLOCKWISE_SKIP);
-        expect(game.getActivePlayer()).to.equal(players[2]);
-
-        // P2 eliminates him/herself
-        game.passOn(PassOnAction.CLOCKWISE);
-        await sleep(300);
-        expect(eliminated).to.deep.equal([players[1], players[0], players[2]]);
-
-        // Error if P2 wants to do something since all players are eliminated
-        expect(() => game.passOn(PassOnAction.CLOCKWISE)).to.throw();
+        // Just P2 is left -> game should end, winner is P2
+        expect(game.getActivePlayer()).to.equal(players[0]);
+        expect(() => game.passOn(PassOnAction.COUNTER_CLOCKWISE_SKIP)).to.throw();
+        expect(winners).to.deep.equal([players[2]]);
     });
 
 });
