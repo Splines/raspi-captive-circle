@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Connection } from '../connection/connection';
 import { gameAdapter } from '../instanceManager';
+import { resetLastPlayerEliminated } from './passOnMove';
 
 export let gameStarted = false;
 
@@ -10,6 +11,8 @@ export async function startGame(req: Request, res: Response) {
     if (playerConnections.length < 3) {
         return res.send(`${playerConnections.length} are not enough players. Need at least 3`);
     }
+
+    resetLastPlayerEliminated();
 
     const initialConnection = await spinToChooseRandomConnection(playerConnections);
     const initialPlayer = gameAdapter.getPlayerBy(initialConnection);
@@ -31,7 +34,6 @@ export async function startGame(req: Request, res: Response) {
  * @param connections sorted (!) connections
  */
 async function spinToChooseRandomConnection(connections: Connection[]) {
-
     // Choose random initial player/connection
     const randomIndex = Math.floor(Math.random() * connections.length)
     const randomConnection = connections[randomIndex];
@@ -58,7 +60,6 @@ async function spinToChooseRandomConnection(connections: Connection[]) {
             if (connectionPassedCount === 3)
                 break;
         }
-
     }
 
     return randomConnection;

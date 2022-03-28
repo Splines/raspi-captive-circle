@@ -2,37 +2,12 @@ async function startGame(ws) {
     // Gestures
     handleGestures(ws);
 
-    // Show default background above everything (so far)
-    const backgroundGradient = document.getElementById('background-gradient');
-    // background gradient should have opacity 0 at this point
-    // strangely, if we set opacity to 0 manually at this point,
-    // there won't be any transition later from opacity 0 to 1
-    // backgroundGradient.style.opacity = 0;
-    backgroundGradient.style.zIndex = 1999;
-    backgroundGradient.style.opacity = 1;
-
-    // Show canvas above everything
-    const backgroundCanvas = document.getElementById('background-particle-canvas');
-    backgroundCanvas.style.zIndex = 2000;
-    backgroundCanvas.style.display = 'flex'; // show canvas for the first time
+    layers.showOnTopWithOpacityChangeHideBefore('background-gradient');
+    layers.showOnTop('background-particle-canvas');
     resizeCanvas();
-
-    // Remove elements below
-    // TODO: semantically this should not be part of this file
-    const checkmark = document.getElementById('checkmark');
-    checkmark.style.display = 'None';
-
-    const arrow = document.getElementById('arrow-left-double-img');
-    arrow.style.display = 'None';
 
     const middleText = document.getElementById('starting-soon-text');
     middleText.style.marginBottom = '0';
-}
-
-function hideCanvas() {
-    // Hide canvas
-    const backgroundCanvas = document.getElementById('background-particle-canvas');
-    backgroundCanvas.style.zIndex = -1;
 }
 
 ////////////////////////////////// Canvas //////////////////////////////////////

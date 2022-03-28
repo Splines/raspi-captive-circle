@@ -28,7 +28,6 @@ export class Game {
         // First player is first registered player
         this.activePlayer = initialPlayer;
 
-
         // Initialize Timer for elimination of players
         this.playersObserver = playersObserver;
         this.time_threshold_ms = time_threshold_ms;
@@ -39,28 +38,29 @@ export class Game {
     }
 
     eliminatePlayer(player: Player) {
-        console.log(`eliminated count: ${this.playersEliminatedCount}`);
-
         this.playersEliminatedCount++;
         player.eliminate();
 
-        // Check if game is over
         if (this.isGameOver()) {
-            // Clear timer (to avoid elimination after timeout)
-            this.timer.reset();
-
-            // Notify winners
-            const winners = this.getPlayersNotEliminated();
-            if (winners.length != 1)
-                return console.error(`❌ Found ${winners.length} winners (expected 1) `
-                    + '-> logic to determine game over is flawed');
-            this.playersObserver.updateWinner(winners[0]);
+            this.gameOver();
         }
     }
 
     isGameOver(): boolean {
         // Game is over if only one person is left
         return this.playersEliminatedCount >= this.circle.getPlayers().length - 1;
+    }
+
+    gameOver(): void {
+        // Clear timer (to avoid elimination after timeout)
+        this.timer.reset();
+
+        // Notify winners
+        const winners = this.getPlayersNotEliminated();
+        if (winners.length != 1)
+            return console.error(`❌ Found ${winners.length} winners (expected 1) `
+                + '-> logic to determine "Game over" is flawed');
+        this.playersObserver.updateWinner(winners[0]);
     }
 
     private getPlayersNotEliminated(): Player[] {

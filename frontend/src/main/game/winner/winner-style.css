@@ -1,4 +1,4 @@
-#background-gradient-elimination {
+#background-gradient-success {
     position: absolute;
     min-height: 100vh;
 
@@ -7,7 +7,7 @@
     bottom: 0;
     left: 0;
 
-    background: radial-gradient(#FF6973, #F24752);
+    background: radial-gradient(#1DF2CB, #0D7F8C);
     opacity: 0;
     transition: opacity 0.4s linear;
 }

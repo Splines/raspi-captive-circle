@@ -1,27 +1,16 @@
-#background-gradient-success {
-    position: absolute;
-    min-height: 100vh;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: radial-gradient(#1DF2CB, #0D7F8C);
-    opacity: 0;
-    transition: opacity 0.4s linear;
-    z-index: 0;
-}
-
 #background-gradient-flicker {
     position: absolute;
     min-height: 100vh;
+
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+
     background: radial-gradient(#F2CB05, #F2B705);
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    z-index: 20000;
+    transition: opacity 0.4s ease-in-out;
+
     pointer-events: none;
 }
 
@@ -29,17 +18,18 @@
 
 #checkmark {
     position: absolute;
+    display: flex;
+
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    display: flex;
+
     align-content: center;
     justify-content: center;
-    transition: opacity 1s linear;
+
     opacity: 0;
-    /* z-index gets increased later via JS */
-    z-index: -1;
+    transition: opacity 1s linear;
 }
 
 #checkmark-img {
@@ -52,21 +42,22 @@
 }
 
 #arrow-left-double {
-    display: flex;
     position: absolute;
+    display: flex;
+
     top: 0;
     bottom: 0;
     left: 0;
+
     justify-content: center;
     align-content: center;
-    /* to show in front of backdrop */
-    z-index: 1;
+
+    opacity: 0;
+    transition: opacity 1s linear;
 }
 
 #arrow-left-double-img {
     width: 100px;
-    opacity: 0;
-    transition: opacity 1s linear;
     animation: 600ms ease-in-out infinite alternate wiggle-left;
 }
 

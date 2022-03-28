@@ -8,6 +8,7 @@ import { checkCalibration, startCalibrate } from './endpoints/calibrate';
 import { login } from './endpoints/login';
 import { moveHint } from './endpoints/moveHint';
 import { getReady } from './endpoints/ready';
+import { resetPlayerOrder } from './endpoints/reset';
 import { showcase } from './endpoints/showcase';
 import { startGame } from './endpoints/start';
 
@@ -67,6 +68,7 @@ app.post('/api/admin/start-showcase', showcase);
 app.post('/api/admin/start-calibrate', startCalibrate);
 app.post('/api/admin/check-calibration', checkCalibration);
 app.post('/api/admin/move-hint', moveHint);
+app.post('/api/admin/reset', resetPlayerOrder);
 
 
 ///////////////////////////// Server listening /////////////////////////////////

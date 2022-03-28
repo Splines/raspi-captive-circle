@@ -1,31 +1,48 @@
 (async function () {
     const ws = await login();
 
+    let isGameOver = false;
     ws.onmessage = event => {
         const msg = event.data;
         console.log(`Got message: ${msg}`);
-        if (msg == 'ELIMINATION_TIMEOUT')
+        if (msg == 'ELIMINATION_TIMEOUT') {
+            if (isGameOver) return;
             return handleTimeoutElimination();
-        else if (msg == 'ELIMINATE_NOT_YOUR_TURN')
-            return handleNotYourTurnElimination();
-        else if (msg == 'SHOWCASE')
+        }
+        else if (msg == 'ELIMINATE_NOT_YOUR_TURN') {
+            if (isGameOver) return;
+            return enterNotYourTurnEliminationMode();
+        }
+        else if (msg == 'SHOWCASE') {
             return handleShowcase();
-        else if (msg == 'CALIBRATE')
-            return transitionToCalibrateMode();
-        else if (msg == 'CALIBRATION_CHECK')
-            return checkCalibration();
-        else if (msg == 'SPIN')
-            return flickerForRandomSpin();
-        else if (msg == 'START_GAME')
+        }
+        else if (msg == 'CALIBRATE') {
+            return enterCalibrateMode();
+        }
+        else if (msg == 'CALIBRATION_CHECK') {
+            return flicker(1000);
+        }
+        else if (msg == 'SPIN') {
+            return flicker(500);
+        }
+        else if (msg == 'START_GAME') {
+            isGameOver = false;
             return startGame(ws);
-        else if (msg == 'YOUR_TURN')
+        }
+        else if (msg == 'YOUR_TURN') {
+            if (isGameOver) return;
             return showMoveHint();
-        else if (msg == 'YOUR_TURN_ENDED')
+        }
+        else if (msg == 'YOUR_TURN_ENDED') {
+            if (isGameOver) return;
             return hideMoveHint();
-        else if (msg == 'END_GAME')
+        }
+        else if (msg == 'END_GAME') {
+            isGameOver = true;
             return handleEndGame();
+        }
         else if (msg == 'WINNER')
-            return handleWinner();
+            return enterWinnerMode();
         console.log('Could not handle the message received');
     }
 })();

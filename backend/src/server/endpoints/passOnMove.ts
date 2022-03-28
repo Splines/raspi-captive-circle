@@ -13,6 +13,10 @@ export function setLastPlayerEliminated(player: Player) {
     lastPlayerEliminated = player;
 }
 
+export function resetLastPlayerEliminated(): void {
+    lastPlayerEliminated = null;
+}
+
 function isAuthorizedToMakeMove(connection: Connection) {
     // Has game started?
     if (!gameStarted) {
@@ -26,7 +30,6 @@ function isAuthorizedToMakeMove(connection: Connection) {
     }
 
     const player = gameAdapter.getPlayerBy(connection);
-
     if (!isPlayerActivePlayer(connection))
         return false;
 

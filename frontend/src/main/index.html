@@ -12,15 +12,22 @@
     <link rel="stylesheet" href="/src/main/style.css">
     <link rel="stylesheet" href="/src/main/game/canvas-style.css">
     <link rel="stylesheet" href="/src/main/game/elimination/elimination-style.css">
+    <link rel="stylesheet" href="/src/main/game/winner/winner-style.css">
     <link rel="stylesheet" href="/src/main/game/moveHint/moveHint-style.css">
     <link rel="stylesheet" href="/src/main/calibrateMode/calibrateMode-style.css">
 </head>
 
 <body>
-    <div id="starting-soon">
-        <p id="starting-soon-text">We'll start soon</p>
-    </div>
+    <!-- Canvas -->
+    <canvas id="background-particle-canvas"></canvas>
 
+    <!-- Backgrounds -->
+    <div id="background-gradient-elimination"></div>
+    <div id="background-gradient-success"></div>
+    <div id="background-gradient-flicker"></div>
+    <div id="background-gradient"></div>
+
+    <!-- Blob -->
     <div id="ready-wrapper">
         <div class="blob-div">
             <img class="blob" id="clickable-blob" src="/assets/blob.svg" />
@@ -30,6 +37,7 @@
         </div> -->
     </div>
 
+    <!-- Additional elements -->
     <div id="checkmark">
         <img id="checkmark-img" src="/assets/checkmark.svg" />
     </div>
@@ -38,34 +46,33 @@
         <img id="arrow-left-double-img" src="/assets/arrow-left-double.svg" />
     </div>
 
-
     <div id="move-hint"></div>
-    <div id="background-gradient-elimination"></div>
-    <div id="background-gradient-flicker"></div>
-    <div id="background-gradient-success"></div>
-    <div id="background-gradient"></div>
 
-    <canvas id="background-particle-canvas"></canvas>
+    <!-- Middle text -->
+    <div id="starting-soon">
+        <p id="starting-soon-text">We'll start soon</p>
+    </div>
 
     <!-- JS -->
-    <script src="/src/main/color.js"></script>
-
+    <script src="/src/util/layerManager.js"></script>
+    <script src="/src/util/sound.js"></script>
     <script src="/src/util/canvas.js"></script>
     <script src="/src/util/fullscreen.js"></script>
-    <script src="/src/util/fadeText.js"></script>
+    <script src="/src/util/transition.js"></script>
 
     <script src="/src/main/game/particle/mouse.js"></script>
     <script src="/src/main/game/particle/particle.js"></script>
     <script src="/src/main/game/gameCanvas.js"></script>
 
     <script src="/src/main/game/elimination/elimination.js"></script>
+    <script src="/src/main/game/winner/winner.js"></script>
 
     <script src="/src/main/game/gesture/gesture.js"></script>
 
     <script src="/src/main/game/moveHint/moveHint.js"></script>
 
+    <script src="/src/main/calibrateMode/flicker.js"></script>
     <script src="/src/main/calibrateMode/calibrateMode.js"></script>
-    <script src="/src/main/calibrateMode/spin.js"></script>
 
 
     <script src="/src/main/login.js"></script>

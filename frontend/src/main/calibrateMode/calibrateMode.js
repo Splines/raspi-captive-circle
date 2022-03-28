@@ -1,17 +1,20 @@
-const middleText = document.getElementById('starting-soon-text');
-const blobDivs = document.getElementsByClassName('blob-div');
-const blob = document.getElementById('clickable-blob');
-const checkmark = document.getElementById('checkmark');
-
-function transitionToCalibrateMode() {
+function enterCalibrateMode() {
     // Resize blob
+    const blobDivs = document.getElementsByClassName('blob-div');
     for (const blobDiv of blobDivs) {
         blobDiv.style.width = '150vh'; // we set vh not vw on purpose
     }
 
+    layers.showOnTopWithOpacityChange('background-gradient');
+    layers.showOnTop('ready-wrapper');
+    layers.showOnTop('starting-soon');
+
+    const middleText = document.getElementById('starting-soon-text');
+    middleText.style.marginBottom = '0';
     fadeToText(middleText, "Tap when it's your turn");
 
     // Change click listener
+    const blob = document.getElementById('clickable-blob');
     blob.removeEventListener('click', onBlobFullscreen);
     blob.addEventListener('click', handleGetReady);
 }
@@ -30,30 +33,29 @@ async function handleGetReady() {
     }
 
     // Remove click listenerg
+    const blob = document.getElementById('clickable-blob');
     blob.removeEventListener('click', handleGetReady);
 
     // Remove blob
+    const blobDivs = document.getElementsByClassName('blob-div');
     for (const blobDiv of blobDivs) {
         blobDiv.style.width = '0vh'; // we set vh not vw on purpose
     }
 
+    // Layers
+    layers.showOnTopWithOpacityChangeHideBefore('background-gradient-success');
+    layers.showOnTop('ready-wrapper'); // to show full hiding animation
+    layers.showOnTop('starting-soon');
+    layers.showOnTopWithOpacityChangeHideBefore('checkmark');
+
     // Change text
+    const middleText = document.getElementById('starting-soon-text');
     middleText.style.marginBottom = '4rem';
     fadeToText(middleText, "Yeah, you're ready", () => {
-        const arrow = document.getElementById('arrow-left-double-img');
-        arrow.style.opacity = 1;
+        layers.showOnTopWithOpacityChangeHideBefore('arrow-left-double');
+        // const arrow = document.getElementById('arrow-left-double-img');
+        // arrow.style.opacity = 1;
     });
-
-    // Change background
-    const successGradient = document.getElementById('background-gradient-success');
-    successGradient.style.opacity = 1;
-
-    const normalGradient = document.getElementById('background-gradient');
-    normalGradient.style.opacity = 0;
-
-    // Checkmark
-    checkmark.style.opacity = 1;
-    checkmark.style.zIndex = 1000;
 }
 
 // Fullscreen handling
@@ -66,15 +68,4 @@ function onCheckmarkFullscreen() {
         enterFullscreen(document.body);
         isFullscreen = true;
     }
-}
-
-// Flicker for calibration check
-const flickerDiv = document.getElementById('background-gradient-flicker');
-async function checkCalibration() {
-    const sleep = (ms) => new Promise(res => setTimeout(res, ms));
-
-    // Flicker once
-    flickerDiv.style.opacity = 1;
-    await sleep(1000);
-    flickerDiv.style.opacity = 0;
 }

@@ -14,7 +14,6 @@ body {
 
 p {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    opacity: 1;
 }
 
 /* 
@@ -27,16 +26,20 @@ p {
 
 #starting-soon {
     position: absolute;
-    z-index: 1000;
-    width: 100vw;
-    height: 100vh;
     display: flex;
+
     align-items: center;
     justify-content: center;
+
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+
     text-align: center;
     font-size: 1.3rem;
     color: white;
     font-weight: bold;
+
     animation: 1s ease-in-out infinite alternate-reverse pulse-scale;
     pointer-events: none;
 }
@@ -57,21 +60,27 @@ p {
 }
 
 #ready-wrapper {
+    position: relative;
     display: flex;
-    height: 100vh;
+
     justify-content: center;
     align-content: center;
+
+    height: 100vh;
 }
 
 .blob-div {
     position: absolute;
+    display: flex;
+
     align-self: center;
     justify-self: center;
-    display: flex;
     justify-content: center;
     align-items: center;
+
     width: 400px;
     height: 100vh;
+
     transition: width 2s;
 }
 
@@ -82,7 +91,6 @@ p {
 .blob {
     position: absolute;
     animation: 1s ease-in-out infinite alternate pulse;
-    z-index: 2;
 }
 
 @keyframes pulse {
@@ -97,18 +105,19 @@ p {
 
 #clickable-blob {
     cursor: pointer;
-    z-index: 3;
+    /* z-index: 1; */
 }
 
 #background-gradient {
     position: absolute;
+
     min-height: 100vh;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+
     background: radial-gradient(#6cd0ff, #315fdd);
-    z-index: -1;
-    transition: opacity 1.2s linear;
     opacity: 1;
+    transition: opacity 1.2s linear;
 }

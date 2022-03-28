@@ -1,9 +1,8 @@
-const moveHint = document.getElementById('move-hint');
-
 function showMoveHint() {
-    moveHint.style.opacity = 1;
+    layers.showOnTopWithOpacityChangeHideBefore('move-hint');
 }
 
 function hideMoveHint() {
+    const moveHint = document.getElementById('move-hint');
     moveHint.style.opacity = 0;
 }
