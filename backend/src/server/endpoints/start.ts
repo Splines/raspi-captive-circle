@@ -20,8 +20,7 @@ export async function startGame(req: Request, res: Response) {
         connection.sendIfPossible('START_GAME');
     }
 
-    // Hint
-    // TODO: optional
+    // Hint for initial connection
     initialConnection.sendIfPossible('YOUR_TURN');
 
     res.send('Started game');

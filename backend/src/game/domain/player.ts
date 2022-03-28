@@ -22,6 +22,10 @@ export class Player {
         this.eliminated = true;
     }
 
+    revive(): void {
+        this.eliminated = false;
+    }
+
     isEliminated(): boolean {
         return this.eliminated;
     }

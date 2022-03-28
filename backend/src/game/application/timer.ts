@@ -15,7 +15,7 @@ export class Timer {
         this.timeout = setTimeout(this.callback, this.ms_to_timeout);
     }
 
-    private reset(): void {
+    reset(): void {
         if (this.timeout)
             clearTimeout(this.timeout);
     }

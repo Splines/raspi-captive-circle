@@ -19,6 +19,7 @@ export class GameAdapter {
 
     initGame(initialPlayer: Player) {
         const players = this.connectionPlayerManager.getAllPlayers();
+        players.forEach(player => player.revive()); // Relevant for REstarting the game
         this.game = new Game(players, initialPlayer, this.eliminationObserver);
     }
 

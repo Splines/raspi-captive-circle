@@ -39,14 +39,21 @@ export class Game {
     }
 
     eliminatePlayer(player: Player) {
+        console.log(`eliminated count: ${this.playersEliminatedCount}`);
+
         this.playersEliminatedCount++;
         player.eliminate();
 
         // Check if game is over
         if (this.isGameOver()) {
-            const winners = this.getPlayerNotEliminated();
+            // Clear timer (to avoid elimination after timeout)
+            this.timer.reset();
+
+            // Notify winners
+            const winners = this.getPlayersNotEliminated();
             if (winners.length != 1)
-                throw Error('Found multiple winners, logic to determine game over is flawed');
+                return console.error(`❌ Found ${winners.length} winners (expected 1) `
+                    + '-> logic to determine game over is flawed');
             this.playersObserver.updateWinner(winners[0]);
         }
     }
@@ -56,7 +63,7 @@ export class Game {
         return this.playersEliminatedCount >= this.circle.getPlayers().length - 1;
     }
 
-    private getPlayerNotEliminated(): Player[] {
+    private getPlayersNotEliminated(): Player[] {
         const notEliminated = [];
         for (const player of this.circle.getPlayers()) {
             if (!player.isEliminated())

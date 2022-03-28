@@ -83,6 +83,6 @@ function handleWinner() {
 
     // Text
     const middleText = document.getElementById('starting-soon-text');
-    fadeToText(middleText, "🎉 Congratulations!<br/>You nailed it.");
+    fadeToText(middleText, "🎉 Congratulations");
     // TODO: add sound effects for winner
 }
