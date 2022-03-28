@@ -28,7 +28,7 @@
     "dev": "nodemon",
     "dev-once": "kill-port 3000 && node -r ts-node/register src/server/server.ts",
     "build": "rimraf ./build && tsc",
-    "start": "node build/index.js",
+    "start": "node build/server/server.js",
     "build-start": "npm run build && npm run start",
     "test": "mocha"
   }
