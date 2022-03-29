@@ -7,24 +7,42 @@
   <p align="center">A captive portal game for the Raspberry Pi</p>
 </p>
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis congue mauris non mollis rhoncus. Sed quis varius enim. Aliquam erat volutpat. Ut faucibus libero ac placerat bibendum. Fusce interdum, dui id suscipit laoreet, dolor dolor iaculis arcu, ac interdum lectus risus a dui. Donec et iaculis lorem. Nullam pretium rutrum elit ut cursus. Vestibulum a tempor nunc, nec blandit erat. Nam lorem enim, lobortis ac sem eu, rutrum pharetra ex.
+**Motivation**
 
-Nulla vel facilisis neque, ut mattis erat. Aenean molestie lacus at turpis blandit, in porttitor mi accumsan. Proin non odio et eros faucibus venenatis. Fusce facilisis eu est vulputate malesuada. Maecenas elementum eros vitae erat euismod, ac pretium mauris laoreet. Maecenas non convallis nisl. Praesent suscipit elit id nisi pharetra mattis. Praesent maximus quam sit amet ipsum suscipit, eget pellentesque sem posuere. Nunc tincidunt cursus odio, in convallis erat auctor vel. Aliquam erat volutpat. Duis pellentesque, ex eget condimentum facilisis, odio lacus maximus sapien, et auctor sem velit eget augue. In in diam eget justo venenatis laoreet. Integer feugiat eu diam at mattis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis erat vel quam cursus aliquam in vel elit.
+Ever connected to a WiFi network in public space? You've probably been redirected to a page where you had to agree to the terms of use to gain access to the Internet. This web page is called "Captive Portal". Why not let users connect to your own WiFi network on a Raspberry Pi and play a game together? This is what "Captive Circle" is all about — a multi-player game for 3 or more people. Those who want to play only need a smartphone and must be physically in the same room.
 
-Phasellus in lectus non urna posuere condimentum quis quis nulla. Nunc non turpis at magna lacinia tincidunt sed eu sapien. Aliquam sem sem, rhoncus sed augue ut, tincidunt semper leo. Nulla facilisi. Aliquam quis ipsum sed nibh convallis dapibus a nec eros. Praesent dictum condimentum ante eget pulvinar. Cras ut elit viverra, mollis ligula vitae, facilisis turpis. Nulla sed odio non urna tincidunt tempus.
+**How the game works**
 
+Players arrange themselves in a circle and everyone puts their smartphone in front of them. One player starts and swipes on the screen to pass on an imaginary impulse to the player to the left or right. The next player has to pass on the impulse within a certain time period. Not quick enough and you get eliminated. You swiped and it was not your turn? You also get eliminated. You play until there is only one player left. To make this more challenging, players can swipe with *one* finger to pass on the impulse to direct neighbors, or *two* fingers to skip direct neighbors and pass on to the next but one player.
 
 <details>
-    <summary>Installation</summary>
+    <summary><strong>Installation</strong></summary>
   
+You, in the role of the game master, need a Raspberry Pi where you can install this game. The Raspi serves as an Access Point showing up as WiFi network on the player's smartphone. Once they connect, they get redirected to a web page that is also served on the Raspi (as Node.js Express app).
+
+Run the script to install the game and be ready to go right away. Python is installed by default on a Raspberry Pi, so clone this repository and execute the script via:
+
+<sub>Note that the script needs to run as sudo user. Make sure that you agree with the commands executed beforehand by looking into the `.sh` scripts in the folder `hotspot`.</sub>
+
 ```
-# Make setup file executable
-sudo chmod a+x ./setup.sh
+git clone https://github.com/Splines/raspi-captive-circle.git
+python setup.py
 ```
+
+The setup will guide you through the installation. Something not working? Open an issue.
+
 </details>
 
 <details>
-    <summary>License</summary>
+    <summary><strong>About this project</strong></summary>
+
+I wrote this game as a university project in the course "Distributed systems". It was supposed to help me understand how to deal with a client-server architecture and websockets. You are free to fork this project and improve it, just make sure you don't distribute this game as closed source, the community should profit from the changes you've made. I won't be able to continuously maintain this project but will probably answer/fix issues sporadically.
+
+</details>
+
+
+<details>
+    <summary><strong>License</strong></summary>
 
 ```
 Captive Circle - A group game with a Raspberry Pi serving as Access Point
@@ -49,5 +67,5 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ---
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/37160523/159822478-70a8f14d-fe83-421f-a5d5-fbd1367bf55c.png" />
+  <img src="https://user-images.githubusercontent.com/37160523/160634131-9c22baf3-0093-4c44-86d6-4269e91367c3.png" alt="Captive Circle Logo with text" />
 </p>
