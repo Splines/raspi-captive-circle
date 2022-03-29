@@ -1,9 +1,8 @@
 {
-  "name": "frontend",
+  "name": "raspi-captive-circle-frontend",
   "version": "1.0.0",
-  "description": "Captive Circle",
-  "main": "index.js",
-  "license": "MIT",
+  "author": "Splines",
+  "license": "AGPL-3.0-or-later",
   "dependencies": {
     "axios": "^0.26.1",
     "hammerjs": "^2.0.8"
