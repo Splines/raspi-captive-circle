@@ -26,7 +26,7 @@ Run the script to install the game and be ready to go right away. Python is inst
 
 ```
 git clone https://github.com/Splines/raspi-captive-circle.git
-python setup.py
+sudo python setup.py
 ```
 
 The setup will guide you through the installation. Something not working? Open an issue.

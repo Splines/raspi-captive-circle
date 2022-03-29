@@ -19,6 +19,19 @@ def print_header():
     ColorPrint.print(cyan, header)
 
 
+def check_super_user():
+    print()
+    ColorPrint.print(cyan, '▶ Check sudo')
+
+    # Is root?
+    if os.geteuid() != 0:
+        print('You need root privileges to run this script.')
+        print('Please try again using "sudo"')
+        sys.exit(1)
+    else:
+        print('Running as root user, continue.')
+
+
 def install_node():
     print()
     ColorPrint.print(cyan, '▶ Node.js & npm')
@@ -48,8 +61,12 @@ def install_node():
     if not installed:
         # https://github.com/nodesource/distributions/blob/master/README.md#installation-instructions
         subprocess.run(
-            'curl -fsSL https://deb.nodesource.com/setup_17.x | sudo -E bash -', shell=True)
+            'curl -fsSL https://rpm.nodesource.com/setup_lts.x | sudo bash -', shell=True)
         subprocess.run('sudo apt-get install -y nodejs', shell=True)
+
+        # npm might not be installed alongside Node.js
+        # see: https://github.com/nodejs/help/issues/554#issuecomment-290041018
+        subprocess.run('sudo apt-get install npm', shell=True)
 
 
 def setup_access_point():
@@ -98,7 +115,7 @@ def setup_server_service():
     with open(serviceConfigPath, 'w') as f:
         f.write(filedata)
 
-    print('We will now register our Node.js app as a Linux service and configure')
+    print('We will now register the Node.js app as a Linux service and configure')
     print('it to start at boot time.')
     print('The following commands will execute as sudo user.')
     print('Please make sure you look through the file "./hotspot/setup-server.sh')
@@ -132,6 +149,8 @@ def done():
 
 def all():
     print_header()
+
+    check_super_user()
 
     install_node()
     setup_access_point()
