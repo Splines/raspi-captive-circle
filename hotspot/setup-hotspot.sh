@@ -1,12 +1,11 @@
 #!/bin/sh
 
-# sudo apt update
-
 # Sources
 # https://www.raspberrypi.com/documentation/computers/configuration.html#setting-up-a-routed-wireless-access-point
 # https://github.com/TomHumphries/RaspberryPiHotspot
 
 # --- Install
+sudo apt update
 # HostAPD access point software and DNS/DHCP via DNSMasq
 sudo apt install -y dnsmasq
 sudo apt install -y hostapd
@@ -23,7 +22,10 @@ cat ./hotspot/dhcpcd.conf | sudo tee -a /etc/dhcpcd.conf > /dev/null
 sudo systemctl restart dhcpcd
 
 # --- Configure DHCP server (dnsmasq)
-sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
+if test -f /etc/dnsmasq.conf; then
+    # Backup file
+    sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
+fi
 sudo cp ./hotspot/dnsmasq.conf /etc/dnsmasq.conf
 sudo systemctl unmask dnsmasq.service
 sudo systemctl enable dnsmasq.service
