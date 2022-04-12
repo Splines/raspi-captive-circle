@@ -27,6 +27,11 @@ if test -f /etc/dnsmasq.conf; then
     sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
 fi
 sudo cp ./hotspot/dnsmasq.conf /etc/dnsmasq.conf
+
+# Don't let dnsmasq alter your /etc/resolv.conf file
+# https://raspberrypi.stackexchange.com/questions/37439/proper-way-to-prevent-dnsmasq-from-overwriting-dns-server-list-supplied-by-dhcp
+echo "DNSMASQ_EXCEPT=lo" | sudo tee -a /etc/default/dnsmasq > /dev/null
+
 sudo systemctl unmask dnsmasq.service
 sudo systemctl enable dnsmasq.service
 sudo systemctl restart dnsmasq
