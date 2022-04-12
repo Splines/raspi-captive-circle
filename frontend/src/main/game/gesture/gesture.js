@@ -1,8 +1,8 @@
 const DIRECTION_LEFT = 2;
 const DIRECTION_HORIZONTAL = 6;
 
-const swellPleng = new Audio('/assets/audio/Swell-Pleng-Short-Attack.mp3');
-const swellPlengDark = new Audio('/assets/audio/Swell-Pleng-Dark.mp3');
+const passOnSound = new Audio('/assets/audio/pass-on.mp3');
+const passOnWithSkipSound = new Audio('/assets/audio/pass-on-with-skip.mp3');
 
 const mc = new Hammer.Manager(document.documentElement);
 mc.add(new Hammer.Swipe({ event: 'oneFingerHorizontalSwipe', pointers: 1, direction: DIRECTION_HORIZONTAL }));
@@ -11,7 +11,8 @@ mc.add(new Hammer.Swipe({ event: 'twoFingersHorizontalSwipe', pointers: 2, direc
 let isLastGesture = false;
 
 function handleOneFingerHorizontalSwipe(event, ws) {
-    catchPlayPromise(swellPleng.play());
+    catchPlayPromise(passOnSound.play());
+    navigator.vibrate(100);
 
     const action = (event.direction === DIRECTION_LEFT)
         ? "PASS_ON_CLOCKWISE" : "PASS_ON_COUNTER_CLOCKWISE";
@@ -24,7 +25,8 @@ function handleOneFingerHorizontalSwipe(event, ws) {
 }
 
 function handleTwoFingersHorizontalSwipe(event, ws) {
-    catchPlayPromise(swellPlengDark.play());
+    catchPlayPromise(passOnWithSkipSound.play());
+    navigator.vibrate([30, 30, 100]);
 
     const action = (event.direction === DIRECTION_LEFT)
         ? "PASS_ON_CLOCKWISE_SKIP" : "PASS_ON_COUNTER_CLOCKWISE_SKIP";

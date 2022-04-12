@@ -1,5 +1,13 @@
+const eliminationSound = new Audio('/assets/audio/game-over.mp3');
+
+function vibrateElimination() {
+    navigator.vibrate([40, 100, 300]);
+}
+
 function handleTimeoutElimination() {
     console.log('You are eliminated due to timeout');
+    catchPlayPromise(eliminationSound.play());
+    vibrateElimination();
 
     removeGestureHandlingOnNextGesture();
 
@@ -12,6 +20,8 @@ function handleTimeoutElimination() {
 
 function enterNotYourTurnEliminationMode() {
     console.log('You are eliminated as you swapped when it was not your turn');
+    catchPlayPromise(eliminationSound.play());
+    vibrateElimination();
 
     removeGestureHandling(); // NOT: "on next gesture" as above
 
