@@ -3,10 +3,10 @@ Description=Pi WiFi Hotspot Service (Captive Circle game)
 After=network.target
 
 [Service]
-WorkingDirectory=/home/pi/dev/raspi-captive-circle/backend
+WorkingDirectory=/path/to/backend/will/be/replaced/via/python/script
 ExecStart=/usr/bin/npm start
 Restart=on-failure
-User=pi
+RestartSec=10
 Environment=PORT=3000
 
 [Install]
