@@ -52,9 +52,9 @@ def install_node():
             f'You have Node.js v{data["node"]} and npm v{data["npm"]} installed.')
 
         majorVersion = data["node"].split('.')[0]
-        if (int(majorVersion) < 17):
+        if (int(majorVersion) < 16):
             answer = query_yes_no(
-                'Would you still like to try installing Node.js v17?', default='yes')
+                'Would you still like to try installing Node.js v16.x (LTS)?', default='yes')
             installed = not answer
 
     # Install
@@ -88,7 +88,7 @@ def setup_access_point():
 
 def install_server_dependencies():
     print()
-    ColorPrint.print(cyan, '▶ Install Node.js dependencies for build')
+    ColorPrint.print(cyan, '▶ Install Node.js dependencies for backend')
 
     subprocess.call('npm install', shell=True, cwd='./backend')
 
@@ -99,6 +99,13 @@ def build_server():
 
     print('This might take some time...')
     subprocess.call('npm run build', shell=True, cwd='./backend')
+
+
+def install_frontend():
+    print()
+    ColorPrint.print(cyan, '▶ Install frontend dependencies')
+
+    subprocess.call('npm install', shell=True, cwd='./frontend')
 
 
 def setup_server_service():
@@ -134,22 +141,26 @@ def done():
     print()
     ColorPrint.print(cyan, '▶ Done')
 
-    print('Awesome, we are done here. Grab your phone and look for the')
-    print('"Captive Circle" WiFi. As gamemaster, you want to type in this URL')
-    print('in your browser: captive.circle/admin')
-    print('(Note that you will get a better experience if you use a "real" browser')
-    print('instead of the built-in one when accessing the captive portal.)')
-    print()
-    print('When you reboot the Raspi, wait 2 minutes, then the WiFi network')
-    print('and the server should be up and running again automatically.')
-    print()
-    print('If you like this project, consider giving a GitHub star ⭐')
-    print()
+    final_msg = (
+        'Awesome, we are done here. Grab your phone and look for the\n'
+        '"Captive Circle" WiFi. As gamemaster, you want to type in this URL\n'
+        'in your browser: captive.circle/admin\n'
+        '(Note that you will get a better experience if you use a "real" browser\n'
+        'instead of the built-in one when accessing the captive portal.)\n'
+        '\n'
+        'When you reboot the Raspi, wait 2 minutes, then the WiFi network\n'
+        'and the server should be up and running again automatically.\n'
+        '\n'
+        'If you like this project, consider giving a GitHub star ⭐\n'
+        'If there are any problems, checkout the troubleshooting section here:\n'
+        'https://github.com/Splines/raspi-captive-circle or open a new issue\n'
+        'on GitHub.'
+    )
+    ColorPrint.print(magenta, final_msg)
 
 
 def all():
     print_header()
-
     check_super_user()
 
     install_node()
@@ -157,6 +168,7 @@ def all():
 
     install_server_dependencies()
     build_server()
+    install_frontend()
     setup_server_service()
 
     done()
