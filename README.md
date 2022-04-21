@@ -22,14 +22,28 @@ You, in the role of the game master, need a Raspberry Pi where you can install t
 
 Run the script to install the game and be ready to go right away. Python is installed by default on a Raspberry Pi, so clone this repository and execute the script via:
 
-<sub>Note that the script needs to run as sudo user. Make sure that you agree with the commands executed beforehand by looking into the `.sh` scripts in the folder `hotspot`.</sub>
+<sub>Note that the script needs to run as sudo user. Make sure that you agree with the commands executed beforehand by looking into the `.sh` scripts in the folder `hotspot`. Setup script tested on Raspbian GNU/Linux 11 (bullseye).</sub>
 
 ```
 git clone https://github.com/Splines/raspi-captive-circle.git
+cd ./raspi-captive-circle/
 sudo python setup.py
 ```
 
-The setup will guide you through the installation. Something not working? Open an issue.
+The setup will guide you through the installation. Feel free to open an issue if you encounter problems, but make sure to check out the troubleshooting section first.
+
+</details>
+
+
+<details>
+    <summary><strong>Connection</strong></summary>
+After the installation, tell users to connect to the WiFi network named "Captive Circle" using the password: `playgame`. Or simply scan this QR code to connect:
+
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/37160523/164447578-45351a83-cf36-48b8-8645-9fd9555eb758.png" width="150px" />
+</p>
+
+The game should automatically open in a captive portal. However, it is _not_ recommended to use the browser that opened the captive portal as it may lack many features that are vital for the game to work. Therefore, if you encounter problems, open a "real" browser like "Google Chrome", "Safari" etc. and access the URL "captive.circle". 
 
 </details>
 
