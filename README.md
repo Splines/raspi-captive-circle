@@ -98,7 +98,7 @@ If this also fails, try to reboot the Raspberry Pi and check again:
 sudo restart
 ```
 
-**I see the Captive Portal WiFi network, but the game doesn't shows up**
+**I see the Captive Portal WiFi network, but the game doesn't show up**
 
 Access the URL `captive.circle` in your browser. Also make sure that the server serving the static HTML pages is up and running:
 
